@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 export default function FormsComp() {
-  const [isDisable, setDisable] = useState(true);
   const [isEmailValid, setEmailValid] = useState(false);
   const [isPasswordValid, setPasswordValid] = useState(false);
 
