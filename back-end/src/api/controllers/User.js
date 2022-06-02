@@ -1,13 +1,11 @@
-const status = require('http-status-codes');
-
 const User = require('../services/User');
 
 const findUser = async (req, res, next) => {
-  const { email } = req.body;
+  const { email, password } = req.body;
   try {
-    const user = await User.findUser(email);
-    if (!user) return res.status(status.NOT_FOUND).json({ message: 'User not found' });
-    res.status(status.OK).json(user);
+    const user = await User.findUser(email, password);
+    const { code, data } = user;
+    res.status(code).json(data);
   } catch (err) {
     next(err);
   }
