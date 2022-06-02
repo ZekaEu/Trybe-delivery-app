@@ -32,26 +32,17 @@ export default function RegisterComp() {
             <input
               type="password"
               id="form3Example4cg"
+              dataTestId="common_register__input-password"
               className="form-control form-control-lg"
             />
             Password
-          </label>
-        </div>
-
-        <div className="form-outline mb-4">
-          <label className="form-label" htmlFor="form3Example4cdg">
-            <input
-              type="password"
-              id="form3Example4cdg"
-              className="form-control form-control-lg"
-            />
-            Repeat your password
           </label>
         </div>
         <div className="d-flex justify-content-center">
           <button
             type="button"
             className="btn btn-primary btn-block btn-lg gradient-custom-4 text-body"
+            dataTestId="common_login__button-register"
             style={ { color: 'white' } }
           >
             Register

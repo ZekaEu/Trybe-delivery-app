@@ -16,3 +16,9 @@
   border-radius: 2%;
   text-align: center;
 }
+
+.register-button {
+  margin-left: 2%;
+  padding: 0.5rem 1rem;
+  width: 445px;
+}

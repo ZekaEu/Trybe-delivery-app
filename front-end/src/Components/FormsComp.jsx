@@ -29,6 +29,7 @@ export default function FormsComp() {
           <input
             type="email"
             id="form1Example13"
+            dataTestId="common_login__input-email"
             className="form-control form-control-lg"
             onChange={ (e) => handleInputEmail(e) }
           />
@@ -41,6 +42,7 @@ export default function FormsComp() {
           <input
             type="password"
             id="form1Example23"
+            dataTestId="common_login__input-password"
             className="form-control form-control-lg"
             onChange={ (e) => handleInputPassword(e) }
           />
@@ -50,13 +52,22 @@ export default function FormsComp() {
       <button
         type="button"
         className="btn btn-primary btn-lg btn-block"
+        dataTestId="common_login__button-login"
         id="sign-in"
         disabled={ !isEmailValid || !isPasswordValid }
       >
         Sign in
       </button>
       <div className="d-flex justify-content-around align-items-center mb-4">
-        <a href="/register">Dont have an account? Register now!</a>
+        <a href="/register">
+          <button
+            type="button"
+            dataTestId="common_login__button-register"
+            className="btn btn-outline-dark register-button"
+          >
+            Dont have an account? Register now!
+          </button>
+        </a>
       </div>
     </form>
   );
