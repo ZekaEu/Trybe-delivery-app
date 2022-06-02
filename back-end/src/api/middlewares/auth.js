@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { StatusCodes } = require('http-status-codes');
+// const { StatusCodes } = require('http-status-codes');
 const jwt = require('jsonwebtoken');
 
 const SECRET = process.env.JWT_SECRET;
@@ -8,11 +8,11 @@ const verifyToken = (req, res, next) => {
   try {
     const token = req.headers.authorization;
     if (!token) {
-      return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'No token provided' });
+      return res.status(400).json({ message: 'No token provided' });
     }
     const { data } = jwt.verify(token, SECRET);
     if (!data) {
-      return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Expired or invalid token' });
+      return res.status(400).json({ message: 'Expired or invalid token' });
     }
     next();
   } catch (e) {
