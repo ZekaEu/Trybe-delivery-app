@@ -33,7 +33,7 @@ export default function RegisterComp() {
   };
 
   return (
-    <div className="card-body p-5 container-form">
+    <div className="card-body p-5 container-form shadow-box">
       <h2 className="text-uppercase text-center mb-5">Create an account</h2>
       <form>
         <div className="form-outline mb-4">

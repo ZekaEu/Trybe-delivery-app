@@ -22,3 +22,7 @@
   padding: 0.5rem 1rem;
   width: 445px;
 }
+
+.shadow-box {
+  box-shadow: rgba(0, 0, 0, 0.12) 5px 5px 5px, rgba(0, 0, 0, 0.24) 5px 5px 5px;
+}
