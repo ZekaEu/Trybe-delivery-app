@@ -1,6 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function RegisterComp() {
+  const [isNameValid, setNameValid] = useState(false);
+  const [isEmailValid, setEmailValid] = useState(false);
+  const [isPasswordValid, setPasswordValid] = useState(false);
+
+  const handleRegisterName = (userName) => {
+    const nameMinLength = 12;
+    if (userName.length >= nameMinLength) {
+      setNameValid(true);
+    } else {
+      setNameValid(false);
+    }
+  };
+
+  const handleRegisterEmail = (email) => {
+    const emailR = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (emailR.test(email)) {
+      setEmailValid(true);
+    } else {
+      setEmailValid(false);
+    }
+  };
+
+  const handleRegisterPassword = (password) => {
+    const minPassLength = 6;
+    if (password.length >= minPassLength) {
+      setPasswordValid(true);
+    } else {
+      setPasswordValid(false);
+    }
+  };
+
   return (
     <div className="card-body p-5 container-form">
       <h2 className="text-uppercase text-center mb-5">Create an account</h2>
@@ -11,6 +42,7 @@ export default function RegisterComp() {
               type="text"
               id="form3Example1cg"
               className="form-control form-control-lg"
+              onChange={ ({ target: { value } }) => handleRegisterName(value) }
             />
             Your Name
           </label>
@@ -22,6 +54,7 @@ export default function RegisterComp() {
               type="email"
               id="form3Example3cg"
               className="form-control form-control-lg"
+              onChange={ ({ target: { value } }) => handleRegisterEmail(value) }
             />
             Your Email
           </label>
@@ -34,6 +67,7 @@ export default function RegisterComp() {
               id="form3Example4cg"
               dataTestId="common_register__input-password"
               className="form-control form-control-lg"
+              onChange={ ({ target: { value } }) => handleRegisterPassword(value) }
             />
             Password
           </label>
@@ -44,6 +78,7 @@ export default function RegisterComp() {
             className="btn btn-primary btn-block btn-lg gradient-custom-4 text-body"
             dataTestId="common_login__button-register"
             style={ { color: 'white' } }
+            disabled={ !isEmailValid || !isNameValid || !isPasswordValid }
           >
             Register
           </button>
