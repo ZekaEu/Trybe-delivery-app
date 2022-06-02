@@ -5,7 +5,7 @@ export default function FormsComp() {
   const [isPasswordValid, setPasswordValid] = useState(false);
 
   const handleInputEmail = ({ target: { value } }) => {
-    const email = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const email = /.+@.+\.com/i;
     if (email.test(value)) {
       setEmailValid(true);
     } else {

@@ -1,5 +1,4 @@
 const md5 = require('md5');
-// const { StatusCodes } = require('http-status-codes');
 const { User } = require('../../database/models');
 const { generateToken } = require('./auth');
 
@@ -20,4 +19,11 @@ const findUser = async (email, password) => {
   return { code: 200, data: safeUser };
 };
 
-module.exports = { findUser };
+const createUser = async ({ email, password, name, role }) => {
+  const hashPass = md5(password);
+  await User.create({ name, email, password: hashPass, role });
+  const safeUser = { name, email, role };
+  return safeUser;
+};
+
+module.exports = { findUser, createUser };

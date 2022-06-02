@@ -15,7 +15,7 @@ export default function RegisterComp() {
   };
 
   const handleRegisterEmail = (email) => {
-    const emailR = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const emailR = /.+@.+\.com/i;
     if (emailR.test(email)) {
       setEmailValid(true);
     } else {
