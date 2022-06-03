@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import DeliveryContext from '../Context/DeliveryContext';
 
 export default function FormsComp() {
   const [isEmailValid, setEmailValid] = useState(false);
+  const [inputEmail, setEmail] = useState('');
   const [isPasswordValid, setPasswordValid] = useState(false);
+  const [inputPassword, setPassword] = useState('');
+  const { fetchUser, errorMsg } = useContext(DeliveryContext);
 
   const handleInputEmail = ({ target: { value } }) => {
+    setEmail(value);
     const email = /.+@.+\.com/i;
     if (email.test(value)) {
       setEmailValid(true);
@@ -14,6 +19,7 @@ export default function FormsComp() {
   };
 
   const handleInputPassword = ({ target: { value } }) => {
+    setPassword(value);
     const minPassLength = 6;
     if (value.length >= minPassLength) {
       setPasswordValid(true);
@@ -49,12 +55,16 @@ export default function FormsComp() {
           Password
         </label>
       </div>
+      <span>
+        { errorMsg || null }
+      </span>
       <button
         type="button"
         className="btn btn-primary btn-lg btn-block"
         dataTestId="common_login__button-login"
         id="sign-in"
         disabled={ !isEmailValid || !isPasswordValid }
+        onClick={ () => fetchUser({ email: inputEmail, password: inputPassword }) }
       >
         Sign in
       </button>
