@@ -6,7 +6,8 @@ const passwordValid = (user, password) => md5(password) === user.password;
 
 const findUser = async (email, password) => {
   const user = await User.findOne({ where: { email } });
-  if (!user || !passwordValid(user, password)) { 
+  if (!user) return { code: 404, data: { message: 'User not found!' } };
+  if (!passwordValid(user, password)) { 
     return { code: 401, data: { message: 'Invalid email or password' } };
   }
   const token = generateToken(user);
@@ -24,7 +25,7 @@ const findOne = async (params) => User.findOne({ where: params });
 const createUser = async ({ email, password, name, role = '' }) => {
   const hashPass = md5(password);
   await User.create({ name, email, password: hashPass, role });
-  const safeUser = { code: 204, data: { name, email, role } };
+  const safeUser = { code: 201, data: { name, email, role, password } };
   return safeUser;
 };
 

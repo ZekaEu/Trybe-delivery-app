@@ -50,6 +50,7 @@ export default function RegisterComp() {
               type="text"
               id="form3Example1cg"
               className="form-control form-control-lg"
+              data-testid="common_register__input-name"
               onChange={ ({ target: { value } }) => handleRegisterName(value) }
             />
             Your Name
@@ -89,7 +90,7 @@ export default function RegisterComp() {
           <button
             type="button"
             className="btn btn-primary btn-block btn-lg gradient-custom-4 text-body"
-            data-testid="common_login__button-register"
+            data-testid="common_register__button-register"
             style={ { color: 'white' } }
             disabled={ !isEmailValid || !isNameValid || !isPasswordValid }
             onClick={ () => fetchCreateUser({

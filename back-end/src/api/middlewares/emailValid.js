@@ -12,8 +12,8 @@ module.exports = async (req, res, next) => {
   }
   const uniqueEmail = await User.findOne({ email });
   if (uniqueEmail) {
-    return res.status(400)
-      .json({ message: 'Email já ecziste!!!' });
+    return res.status(409)
+      .json({ message: 'Email already in use!' });
   }
   return next(); 
 };
