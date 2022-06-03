@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import DeliveryContext from '../Context/DeliveryContext';
 
 export default function RegisterComp() {
   const [isNameValid, setNameValid] = useState(false);
   const [isEmailValid, setEmailValid] = useState(false);
+  const [inputEmail, setInputEmail] = useState('');
+  const [inputPassword, setInputPassword] = useState('');
+  const [inputName, setInputName] = useState('');
   const [isPasswordValid, setPasswordValid] = useState(false);
+  const { fetchCreateUser } = useContext(DeliveryContext);
 
   const handleRegisterName = (userName) => {
+    setInputName(userName);
     const nameMinLength = 12;
     if (userName.length >= nameMinLength) {
       setNameValid(true);
@@ -15,6 +21,7 @@ export default function RegisterComp() {
   };
 
   const handleRegisterEmail = (email) => {
+    setInputEmail(email);
     const emailR = /.+@.+\.com/i;
     if (emailR.test(email)) {
       setEmailValid(true);
@@ -24,6 +31,7 @@ export default function RegisterComp() {
   };
 
   const handleRegisterPassword = (password) => {
+    setInputPassword(password);
     const minPassLength = 6;
     if (password.length >= minPassLength) {
       setPasswordValid(true);
@@ -79,6 +87,12 @@ export default function RegisterComp() {
             dataTestId="common_login__button-register"
             style={ { color: 'white' } }
             disabled={ !isEmailValid || !isNameValid || !isPasswordValid }
+            onClick={ () => fetchCreateUser({
+              name: inputName,
+              email: inputEmail,
+              password: inputPassword,
+              role: 'Customer',
+            }) }
           >
             Register
           </button>

@@ -1,12 +1,20 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import DeliveryContext from '../Context/DeliveryContext';
-import { CHECK_USER } from '../services/URLs';
+import { CHECK_USER, CREATE_USER } from '../services/URLs';
 
 export default function ContextComp({ children }) {
   const [userInfos, setUserInfos] = useState([]);
   const [errorMsg, setErrorMsg] = useState(null);
+  const navigate = useNavigate();
+
+  const treatMsg = (msg) => {
+    if (msg.includes('401')) return 'Email or Password Invalid';
+    if (msg.includes('409')) return 'Email already in use';
+    return msg;
+  };
 
   const fetchUser = async ({ email, password }) => {
     await axios.post(CHECK_USER, {
@@ -14,17 +22,32 @@ export default function ContextComp({ children }) {
       password,
     }).then(({ data }) => {
       setUserInfos(data);
+      navigate('/products');
+      console.log(data);
     }).catch(({ message }) => {
-      const msgTreated = message.includes('401') ? 'Email or Password Invalid' : message;
+      const msgTreated = treatMsg(message);
       setErrorMsg(msgTreated);
       console.log(message);
     });
+  };
+
+  const fetchCreateUser = async ({ name, email, password, role }) => {
+    await axios.post(CREATE_USER, {
+      name,
+      email,
+      password,
+      role,
+    }).then(({ data }) => {
+      fetchUser({ email: data.email, password: data.password });
+    })
+      .catch(({ message }) => console.log(message));
   };
 
   const state = {
     userInfos,
     errorMsg,
     fetchUser,
+    fetchCreateUser,
   };
 
   return (
