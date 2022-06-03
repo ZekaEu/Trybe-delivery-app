@@ -1,5 +1,7 @@
 // const { StatusCodes } = require('http-status-codes');
 
+const User = require('../services/User');
+
 module.exports = async (req, res, next) => {
   const { email } = req.body;
   const emailRegex = /.+@.+\.com/i; 
@@ -7,6 +9,11 @@ module.exports = async (req, res, next) => {
   if (!emailRegex.test(email)) {
     return res.status(400)
       .json({ message: 'Email not valid' });
+  }
+  const uniqueEmail = await User.findOne({ email });
+  if (uniqueEmail) {
+    return res.status(400)
+      .json({ message: 'Email já ecziste!!!' });
   }
   return next(); 
 };

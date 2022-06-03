@@ -13,17 +13,19 @@ const findUser = async (email, password) => {
   const safeUser = {
     id: user.id,
     name: user.name,
-    role: user.role,
+    role: user.role ? user.role : '',
     token,
   };
   return { code: 200, data: safeUser };
 };
 
-const createUser = async ({ email, password, name, role }) => {
+const findOne = async (params) => User.findOne({ where: params });
+
+const createUser = async ({ email, password, name, role = '' }) => {
   const hashPass = md5(password);
   await User.create({ name, email, password: hashPass, role });
   const safeUser = { name, email, role };
   return safeUser;
 };
 
-module.exports = { findUser, createUser };
+module.exports = { findUser, findOne, createUser };
