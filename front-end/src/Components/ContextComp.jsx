@@ -37,7 +37,8 @@ export default function ContextComp({ children }) {
       password,
       role,
     }).then(({ data }) => {
-      fetchUser({ email: data.email, password: data.password });
+      setUserInfos(data);
+      navigate('/customer/products');
     })
       .catch(({ message }) => {
         const msgTreated = treatMsg(message);
