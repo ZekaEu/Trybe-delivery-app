@@ -13,6 +13,7 @@ export default function ContextComp({ children }) {
   const treatMsg = (msg) => {
     if (msg.includes('401')) return 'Email or Password Invalid';
     if (msg.includes('409')) return 'Email already in use';
+    if (msg.includes('404')) return 'User not found! Please Sign up';
     return msg;
   };
 
