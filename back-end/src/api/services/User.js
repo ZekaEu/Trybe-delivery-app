@@ -22,10 +22,10 @@ const findUser = async (email, password) => {
 
 const findOne = async (params) => User.findOne({ where: params });
 
-const createUser = async ({ email, password, name, role = '' }) => {
+const createUser = async ({ email, password, name, role }) => {
   const hashPass = md5(password);
   await User.create({ name, email, password: hashPass, role });
-  const safeUser = { code: 201, data: { name, email, role, password } };
+  const safeUser = { code: 201, data: { name, email, role } };
   return safeUser;
 };
 
