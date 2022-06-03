@@ -15,7 +15,6 @@ const createUser = async (req, res, next) => {
   const { name, email, password, role } = req.body;
   try {
     const { code, data } = await User.createUser({ name, email, password, role });
-    console.log(data);
     return res.status(code).json(data);
   } catch (err) {
     return next(err);

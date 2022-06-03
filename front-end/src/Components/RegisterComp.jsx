@@ -63,6 +63,7 @@ export default function RegisterComp() {
               type="email"
               id="form3Example3cg"
               className="form-control form-control-lg"
+              data-testid="common_register__input-email"
               onChange={ ({ target: { value } }) => handleRegisterEmail(value) }
             />
             Your Email
