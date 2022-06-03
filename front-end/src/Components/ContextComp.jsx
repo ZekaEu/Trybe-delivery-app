@@ -24,11 +24,9 @@ export default function ContextComp({ children }) {
     }).then(({ data }) => {
       setUserInfos(data);
       navigate('/customer/products');
-      console.log(data);
     }).catch(({ message }) => {
       const msgTreated = treatMsg(message);
       setErrorMsg(msgTreated);
-      console.log(message);
     });
   };
 
