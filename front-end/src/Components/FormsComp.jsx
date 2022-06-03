@@ -35,7 +35,7 @@ export default function FormsComp() {
           <input
             type="email"
             id="form1Example13"
-            dataTestId="common_login__input-email"
+            data-testid="common_login__input-email"
             className="form-control form-control-lg"
             onChange={ (e) => handleInputEmail(e) }
           />
@@ -48,7 +48,7 @@ export default function FormsComp() {
           <input
             type="password"
             id="form1Example23"
-            dataTestId="common_login__input-password"
+            data-testid="common_login__input-password"
             className="form-control form-control-lg"
             onChange={ (e) => handleInputPassword(e) }
           />
@@ -61,7 +61,7 @@ export default function FormsComp() {
       <button
         type="button"
         className="btn btn-primary btn-lg btn-block"
-        dataTestId="common_login__button-login"
+        data-testid="common_login__button-login"
         id="sign-in"
         disabled={ !isEmailValid || !isPasswordValid }
         onClick={ () => fetchUser({ email: inputEmail, password: inputPassword }) }
@@ -72,7 +72,7 @@ export default function FormsComp() {
         <a href="/register">
           <button
             type="button"
-            dataTestId="common_login__button-register"
+            data-testid="common_login__button-register"
             className="btn btn-outline-dark register-button"
           >
             Dont have an account? Register now!
