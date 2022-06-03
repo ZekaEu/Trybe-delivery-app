@@ -8,7 +8,7 @@ export default function RegisterComp() {
   const [inputPassword, setInputPassword] = useState('');
   const [inputName, setInputName] = useState('');
   const [isPasswordValid, setPasswordValid] = useState(false);
-  const { fetchCreateUser } = useContext(DeliveryContext);
+  const { fetchCreateUser, errorMsg } = useContext(DeliveryContext);
 
   const handleRegisterName = (userName) => {
     setInputName(userName);
@@ -80,6 +80,11 @@ export default function RegisterComp() {
             Password
           </label>
         </div>
+        <span
+          data-testid="common_login__element-invalid-email"
+        >
+          { errorMsg || null }
+        </span>
         <div className="d-flex justify-content-center">
           <button
             type="button"

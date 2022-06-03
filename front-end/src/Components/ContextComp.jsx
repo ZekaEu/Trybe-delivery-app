@@ -22,7 +22,7 @@ export default function ContextComp({ children }) {
       password,
     }).then(({ data }) => {
       setUserInfos(data);
-      navigate('/products');
+      navigate('/customer/products');
       console.log(data);
     }).catch(({ message }) => {
       const msgTreated = treatMsg(message);
@@ -40,7 +40,10 @@ export default function ContextComp({ children }) {
     }).then(({ data }) => {
       fetchUser({ email: data.email, password: data.password });
     })
-      .catch(({ message }) => console.log(message));
+      .catch(({ message }) => {
+        const msgTreated = treatMsg(message);
+        setErrorMsg(msgTreated);
+      });
   };
 
   const state = {

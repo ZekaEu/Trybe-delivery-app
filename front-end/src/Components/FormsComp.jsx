@@ -55,7 +55,7 @@ export default function FormsComp() {
           Password
         </label>
       </div>
-      <span>
+      <span data-testid="common_login__element-invalid-email">
         { errorMsg || null }
       </span>
       <button
