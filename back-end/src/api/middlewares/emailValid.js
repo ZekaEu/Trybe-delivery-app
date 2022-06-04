@@ -10,10 +10,5 @@ module.exports = async (req, res, next) => {
     return res.status(400)
       .json({ message: 'Email not valid' });
   }
-  const uniqueEmail = await User.findOne({ email });
-  if (uniqueEmail) {
-    return res.status(409)
-      .json({ message: 'Email already in use!' });
-  }
   return next(); 
 };
