@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import DeliveryContext from '../Context/DeliveryContext';
 
 export default function RegisterComp() {
   const [isNameValid, setNameValid] = useState(false);
   const [isEmailValid, setEmailValid] = useState(false);
+  const [inputEmail, setInputEmail] = useState('');
+  const [inputPassword, setInputPassword] = useState('');
+  const [inputName, setInputName] = useState('');
   const [isPasswordValid, setPasswordValid] = useState(false);
+  const { fetchCreateUser, errorMsg } = useContext(DeliveryContext);
 
   const handleRegisterName = (userName) => {
+    setInputName(userName);
     const nameMinLength = 12;
     if (userName.length >= nameMinLength) {
       setNameValid(true);
@@ -15,6 +21,7 @@ export default function RegisterComp() {
   };
 
   const handleRegisterEmail = (email) => {
+    setInputEmail(email);
     const emailR = /.+@.+\.com/i;
     if (emailR.test(email)) {
       setEmailValid(true);
@@ -24,6 +31,7 @@ export default function RegisterComp() {
   };
 
   const handleRegisterPassword = (password) => {
+    setInputPassword(password);
     const minPassLength = 6;
     if (password.length >= minPassLength) {
       setPasswordValid(true);
@@ -42,6 +50,7 @@ export default function RegisterComp() {
               type="text"
               id="form3Example1cg"
               className="form-control form-control-lg"
+              data-testid="common_register__input-name"
               onChange={ ({ target: { value } }) => handleRegisterName(value) }
             />
             Your Name
@@ -54,6 +63,7 @@ export default function RegisterComp() {
               type="email"
               id="form3Example3cg"
               className="form-control form-control-lg"
+              data-testid="common_register__input-email"
               onChange={ ({ target: { value } }) => handleRegisterEmail(value) }
             />
             Your Email
@@ -65,20 +75,31 @@ export default function RegisterComp() {
             <input
               type="password"
               id="form3Example4cg"
-              dataTestId="common_register__input-password"
+              data-testid="common_register__input-password"
               className="form-control form-control-lg"
               onChange={ ({ target: { value } }) => handleRegisterPassword(value) }
             />
             Password
           </label>
         </div>
+        <span
+          data-testid="common_login__element-invalid-email"
+        >
+          { errorMsg || null }
+        </span>
         <div className="d-flex justify-content-center">
           <button
             type="button"
             className="btn btn-primary btn-block btn-lg gradient-custom-4 text-body"
-            dataTestId="common_login__button-register"
+            data-testid="common_register__button-register"
             style={ { color: 'white' } }
             disabled={ !isEmailValid || !isNameValid || !isPasswordValid }
+            onClick={ () => fetchCreateUser({
+              name: inputName,
+              email: inputEmail,
+              password: inputPassword,
+              role: 'Customer',
+            }) }
           >
             Register
           </button>
