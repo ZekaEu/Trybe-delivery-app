@@ -1,8 +1,8 @@
 require('dotenv').config();
-// const { StatusCodes } = require('http-status-codes');
+const fs = require('fs');
 const jwt = require('jsonwebtoken');
 
-const SECRET = process.env.JWT_SECRET;
+const SECRET = fs.readFileSync('jwt.evaluation.key', 'utf8');
 
 const verifyToken = (req, res, next) => {
   try {

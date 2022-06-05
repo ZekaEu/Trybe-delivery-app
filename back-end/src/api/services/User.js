@@ -24,6 +24,10 @@ const findOne = async (params) => User.findOne({ where: params });
 
 const createUser = async ({ email, password, name, role }) => {
   const hashPass = md5(password);
+  const uniqueEmail = await findOne({ email });
+  if (uniqueEmail) {
+    return { code: 409, data: { message: 'Email already in use!' } };
+  }
   await User.create({ name, email, password: hashPass, role });
   const safeUser = { code: 201, data: { name, email, role } };
   return safeUser;

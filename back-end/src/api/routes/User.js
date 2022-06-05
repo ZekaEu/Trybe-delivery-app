@@ -8,6 +8,7 @@ const User = require('../controllers/User');
 const UserRouter = Router();
 
 UserRouter.post('/',
+  emailValid,
   passwordValid,
   User.findUser);
 
