@@ -5,7 +5,7 @@ const findProducts = async (_req, res, next) => {
     const { code, data } = await Product.findProducts();
     return res.status(code).json(data);
   } catch (err) {
-    return next(err)
+    return next(err);
   }
 };
 
