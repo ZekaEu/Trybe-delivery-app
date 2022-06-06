@@ -3,10 +3,10 @@ module.exports = (sequelize, DataTypes) => {
     id: { allowNull: false, autoIncrement: true, type: DataTypes.INTEGER, primaryKey: true },
     userId: { allowNull: false, type: DataTypes.INTEGER },
     sellerId: { allowNull: false, type: DataTypes.INTEGER },
-    totalPrice: { allowNull: false, type: DataTypes.DECIMAL },
+    totalPrice: { allowNull: false, type: DataTypes.DECIMAL(9, 2) },
     deliveryAddress: { allowNull: false, type: DataTypes.STRING },
     deliveryNumber: { allowNull: false, type: DataTypes.INTEGER },
-    saleDate: { allowNull: false, type: DataTypes.DATE },
+    saleDate: { type: DataTypes.DATE },
     status: { allowNull: false, type: DataTypes.STRING },
   },
   {
