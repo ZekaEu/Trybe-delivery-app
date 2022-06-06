@@ -1,0 +1,14 @@
+.products-nav {
+  align-items: center;
+  background-color: rgb(0, 0, 0);
+  border: 1px solid black;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  padding: 1%;
+}
+
+.log-out:hover {
+  background-color: rgb(185, 35, 35);
+  color: black;
+}

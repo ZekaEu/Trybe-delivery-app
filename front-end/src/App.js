@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import './App.css';
+import './LoginAndRegister.css';
+import './ProductsPage.css';
 import CustomerProducts from './Pages/CustomerProducts';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
