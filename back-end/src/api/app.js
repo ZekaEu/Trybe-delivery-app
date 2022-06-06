@@ -1,4 +1,5 @@
 const express = require('express');
+const productRouter = require('./routes/Product');
 const UserRouter = require('./routes/User');
 
 const app = express();
@@ -11,6 +12,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use('/login', UserRouter);
+app.use('/customer/products', productRouter);
 
 app.get('/coffee', (_req, res) => res.status(418).end());
 
