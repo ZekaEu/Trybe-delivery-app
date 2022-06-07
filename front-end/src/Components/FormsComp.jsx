@@ -60,9 +60,8 @@ export default function FormsComp() {
       </span>
       <button
         type="button"
-        className="btn btn-primary btn-lg btn-block"
+        className="btn btn-primary btn-lg btn-block sign-in"
         data-testid="common_login__button-login"
-        id="sign-in"
         disabled={ !isEmailValid || !isPasswordValid }
         onClick={ () => fetchUser({ email: inputEmail, password: inputPassword }) }
       >
