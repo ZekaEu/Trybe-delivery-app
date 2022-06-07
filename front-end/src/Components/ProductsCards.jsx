@@ -24,7 +24,7 @@ export default function ProductsCards() {
             {`R$ ${price}`}
           </span>
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMtMvKAAogZzW19KXYjuR6m-8TCHMrWQ-2BA&usqp=CAU"
+            src={ urlImage }
             alt={ name }
             data-testid={ `customer_products__img-card-bg-image-${id}` }
             className="product-img"
