@@ -2,10 +2,10 @@ const { Router } = require('express');
 
 const Sale = require('../controllers/Sale');
 
-const UserRouter = Router();
+const SaleRouter = Router();
 
-UserRouter.post(
+SaleRouter.post(
   '/',
   Sale.createSale,
 );
-module.exports = UserRouter;
+module.exports = SaleRouter;
