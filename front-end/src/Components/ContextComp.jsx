@@ -24,7 +24,7 @@ export default function ContextComp({ children }) {
     }).then(({ data }) => {
       // setUserInfos(data);
       navigate('/customer/products');
-      localStorage.setItem('login', JSON.stringify(data));
+      localStorage.setItem('user', JSON.stringify(data));
     }).catch(({ message }) => {
       const msgTreated = treatMsg(message);
       setErrorMsg(msgTreated);
@@ -39,7 +39,7 @@ export default function ContextComp({ children }) {
       role,
     }).then(({ data }) => {
       // setUserInfos(data);
-      localStorage.setItem('login', JSON.stringify(data));
+      localStorage.setItem('user', JSON.stringify(data));
       navigate('/customer/products');
     })
       .catch(({ message }) => {

@@ -6,7 +6,7 @@ export default function ProductsNavigation() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const { name } = JSON.parse(localStorage.getItem('login'));
+    const { name } = JSON.parse(localStorage.getItem('user'));
     setUserName(name);
   }, []);
 

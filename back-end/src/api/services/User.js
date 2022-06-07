@@ -14,6 +14,7 @@ const findUser = async (email, password) => {
   const safeUser = {
     id: user.id,
     name: user.name,
+    email: user.email,
     role: user.role ? user.role : '',
     token,
   };
@@ -28,8 +29,9 @@ const createUser = async ({ email, password, name, role }) => {
   if (uniqueEmail) {
     return { code: 409, data: { message: 'Email already in use!' } };
   }
-  await User.create({ name, email, password: hashPass, role });
-  const safeUser = { code: 201, data: { name, email, role } };
+  const { id } = await User.create({ name, email, password: hashPass, role });
+  const token = generateToken({ id, name, email, role });
+  const safeUser = { code: 201, data: { name, email, role, token } };
   return safeUser;
 };
 
