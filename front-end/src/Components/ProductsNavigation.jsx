@@ -18,12 +18,28 @@ export default function ProductsNavigation() {
   return (
     <header>
       <nav className="products-nav">
-        <span className="nav-span">PRODUTOS</span>
-        <span className="nav-span">MEUS PEDIDOS</span>
-        <span className="nav-span">{ userName }</span>
+        <span
+          className="nav-span"
+          data-testid="customer_products__element-navbar-link-products"
+        >
+          PRODUTOS
+        </span>
+        <span
+          className="nav-span"
+          data-testid="customer_products__element-navbar-link-orders"
+        >
+          MEUS PEDIDOS
+        </span>
+        <span
+          className="nav-span"
+          data-testid="customer_products__element-navbar-user-full-name"
+        >
+          { userName }
+        </span>
         <button
           className="btn btn-outline-danger log-out"
           type="button"
+          data-testid="customer_products__element-navbar-link-logout"
           onClick={ handleLogOut }
         >
           Log out
