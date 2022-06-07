@@ -6,7 +6,7 @@ import DeliveryContext from '../Context/DeliveryContext';
 import { CHECK_USER, CREATE_USER } from '../services/URLs';
 
 export default function ContextComp({ children }) {
-  const [userInfos, setUserInfos] = useState([]);
+  // const [userInfos, setUserInfos] = useState([]);
   const [errorMsg, setErrorMsg] = useState(null);
   const navigate = useNavigate();
 
@@ -22,8 +22,9 @@ export default function ContextComp({ children }) {
       email,
       password,
     }).then(({ data }) => {
-      setUserInfos(data);
+      // setUserInfos(data);
       navigate('/customer/products');
+      localStorage.setItem('user', JSON.stringify(data));
     }).catch(({ message }) => {
       const msgTreated = treatMsg(message);
       setErrorMsg(msgTreated);
@@ -37,7 +38,8 @@ export default function ContextComp({ children }) {
       password,
       role,
     }).then(({ data }) => {
-      setUserInfos(data);
+      // setUserInfos(data);
+      localStorage.setItem('user', JSON.stringify(data));
       navigate('/customer/products');
     })
       .catch(({ message }) => {
@@ -47,7 +49,6 @@ export default function ContextComp({ children }) {
   };
 
   const state = {
-    userInfos,
     errorMsg,
     fetchUser,
     fetchCreateUser,
