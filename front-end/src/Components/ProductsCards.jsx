@@ -4,10 +4,34 @@ import { GET_PRODUCTS } from '../services/URLs';
 
 export default function ProductsCards() {
   const [products, setProducts] = useState([]);
+  const [arrQt, setArrQt] = useState([]);
 
   const fetchProducts = async () => {
     await axios.get(GET_PRODUCTS)
-      .then(({ data }) => setProducts(data));
+      .then(({ data }) => {
+        const element = [];
+        for (let i = 0; i < data.length; i += 1) {
+          element.push(0);
+        }
+        setArrQt(element);
+        setProducts(data);
+      });
+  };
+
+  const decreaseQuantity = (i) => {
+    if (arrQt[i] - 1 < 0) {
+      arrQt[i] = 0;
+    } else {
+      arrQt[i] -= 1;
+    }
+    setArrQt([...arrQt]);
+    console.log(arrQt);
+  };
+
+  const increaseQuantity = (i) => {
+    arrQt[i] += 1;
+    setArrQt([...arrQt]);
+    console.log(arrQt);
   };
 
   useEffect(() => {
@@ -16,7 +40,7 @@ export default function ProductsCards() {
 
   return (
     <main className="products-container">
-      { products.map(({ id, name, price, urlImage }) => (
+      { products.map(({ id, name, price, urlImage }, i) => (
         <div key={ id } className="item">
           <span
             data-testid={ `customer_products__element-card-price-${id}` }
@@ -40,7 +64,9 @@ export default function ProductsCards() {
               <button
                 className="quantity-button btn btn-outline-success"
                 type="button"
+                name={ id }
                 data-testid={ `customer_products__button-card-rm-item-${id}` }
+                onClick={ () => decreaseQuantity(i) }
               >
                 -
               </button>
@@ -49,7 +75,13 @@ export default function ProductsCards() {
                   id={ id }
                   className="product-quantity"
                   type="number"
-                  defaultValue="0"
+                  // min="0"
+                  onChange={ ({ target: { value } }) => {
+                    arrQt[i] = Number(value);
+                    setArrQt([...arrQt]);
+                    console.log(arrQt[i], price);
+                  } }
+                  value={ arrQt[i] }
                   data-testid={ `customer_products__input-card-quantity-${id}` }
                 />
               </label>
@@ -57,6 +89,7 @@ export default function ProductsCards() {
                 className="quantity-button btn btn-outline-success"
                 type="button"
                 data-testid={ `customer_products__button-card-add-item-${id}` }
+                onClick={ () => increaseQuantity(i) }
               >
                 +
               </button>
