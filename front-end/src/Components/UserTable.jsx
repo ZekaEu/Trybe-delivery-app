@@ -11,7 +11,7 @@ export default function UserTable() {
   const removeUser = async (id) => {
     await deleteUser(id);
     await fetchAllUser();
-  }
+  };
 
   return (
     <table className="table table-striped mt-4 align-middle">
@@ -30,22 +30,22 @@ export default function UserTable() {
             <tr key={ `${id}-${name}` }>
               <th
                 scope="row"
-                data-testid={`admin_manage__element-user-table-item-number-${index}`}
+                data-testid={ `admin_manage__element-user-table-item-number-${index}` }
               >
                 { id }
               </th>
-              <td 
-                data-testid={`admin_manage__element-user-table-name-${index}`}
+              <td
+                data-testid={ `admin_manage__element-user-table-name-${index}` }
               >
                 { name }
               </td>
               <td
-                data-testid={`admin_manage__element-user-table-email-${index}`}
+                data-testid={ `admin_manage__element-user-table-email-${index}` }
               >
                 { email }
               </td>
               <td
-                data-testid={`admin_manage__element-user-table-role-${index}`}
+                data-testid={ `admin_manage__element-user-table-role-${index}` }
               >
                 { role }
               </td>
@@ -53,9 +53,9 @@ export default function UserTable() {
                 <button
                   className="btn btn-outline-danger"
                   style={ { marginLeft: '10px' } }
-                  data-testid={`admin_manage__element-user-table-remove-${index}`}
+                  data-testid={ `admin_manage__element-user-table-remove-${index}` }
                   type="button"
-                  onClick={ () => removeUser(id)}
+                  onClick={ () => removeUser(id) }
                 >
                   Delete
                 </button>

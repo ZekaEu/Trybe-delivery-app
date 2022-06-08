@@ -48,7 +48,7 @@ export default function RegisterComp() {
     setInputEmail('');
     setInputPassword('');
     setInputRole('customer');
-  }
+  };
 
   return (
     <div className="card-body p-3 container-form shadow-box">
@@ -96,21 +96,19 @@ export default function RegisterComp() {
           </label>
         </div>
 
-        <div className="form-outline mb-4 col">
-          <label className="form-label" htmlFor="form3Example4cg">
-            <select
-              className="form-control form-control-lg form-select"
-              value={ inputRole }
-              data-testid="admin_manage__select-role"
-              onChange={ ({ target: { value } }) => setInputRole(value) }
-            >
-              <option>customer</option>
-              <option>seller</option>
-              <option>administrator</option>
-            </select>
-            Role
-          </label>
-        </div>
+        <label className="form-label mb-4 col" htmlFor="form3Example4cg">
+          <select
+            className="form-control form-control-lg form-select"
+            value={ inputRole }
+            data-testid="admin_manage__select-role"
+            onChange={ ({ target: { value } }) => setInputRole(value) }
+          >
+            <option>customer</option>
+            <option>seller</option>
+            <option>administrator</option>
+          </select>
+          Role
+        </label>
         <div className="col">
           <button
             type="button"
