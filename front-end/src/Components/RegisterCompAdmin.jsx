@@ -51,7 +51,7 @@ export default function RegisterComp() {
               type="text"
               id="form3Example1cg"
               className="form-control form-control-lg"
-              data-testid="common_register__input-name"
+              data-testid="admin_manage__input-name"
               onChange={ ({ target: { value } }) => handleRegisterName(value) }
             />
             Your Name
@@ -64,7 +64,7 @@ export default function RegisterComp() {
               type="email"
               id="form3Example3cg"
               className="form-control form-control-lg"
-              data-testid="common_register__input-email"
+              data-testid="admin_manage__input-email"
               onChange={ ({ target: { value } }) => handleRegisterEmail(value) }
             />
             Your Email
@@ -76,7 +76,7 @@ export default function RegisterComp() {
             <input
               type="password"
               id="form3Example4cg"
-              data-testid="common_register__input-password"
+              data-testid="admin_manage__input-password"
               className="form-control form-control-lg"
               onChange={ ({ target: { value } }) => handleRegisterPassword(value) }
             />
@@ -89,6 +89,7 @@ export default function RegisterComp() {
             <select
               className="form-control form-control-lg form-select"
               value={ inputRole }
+              data-testid="admin_manage__select-role"
               onChange={ ({ target: { value } }) => setInputRole(value) }
             >
               <option>customer</option>
@@ -102,7 +103,7 @@ export default function RegisterComp() {
           <button
             type="button"
             className="btn btn-primary btn-block btn-lg gradient-custom-4 text-body"
-            data-testid="common_register__button-register"
+            data-testid="admin_manage__button-register"
             style={ { color: 'white' } }
             disabled={ !isEmailValid || !isNameValid || !isPasswordValid }
             onClick={ () => fetchCreateUser({
@@ -117,10 +118,10 @@ export default function RegisterComp() {
         </div>
       </form>
       <span
-          data-testid="common_register__element-invalid_register"
-        >
-          { errorMsg || null }
-        </span>
+        data-testid="common_register__element-invalid_register"
+      >
+        { errorMsg || null }
+      </span>
     </div>
   );
 }

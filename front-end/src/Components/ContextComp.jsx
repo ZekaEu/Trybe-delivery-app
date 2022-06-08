@@ -3,11 +3,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import DeliveryContext from '../Context/DeliveryContext';
-import { CHECK_USER, CREATE_USER } from '../services/URLs';
+import { CHECK_USER, CREATE_USER, GET_USERS, DELETE_USERS } from '../services/URLs';
 
 export default function ContextComp({ children }) {
   // const [userInfos, setUserInfos] = useState([]);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [allUsers, setAllUsers] = useState([]);
   const navigate = useNavigate();
 
   const treatMsg = (msg) => {
@@ -15,6 +16,24 @@ export default function ContextComp({ children }) {
     if (msg.includes('409')) return 'Email already in use';
     if (msg.includes('404')) return 'User not found! Please Sign up';
     return msg;
+  };
+
+  const fetchAllUser = async () => {
+    await axios.get(GET_USERS).then(({ data }) => {
+      setAllUsers([...data]);
+    }).catch(({ message }) => {
+      const msgTreated = treatMsg(message);
+      setErrorMsg(msgTreated);
+    });
+  };
+
+  const deleteUser = async (id) => {
+    await axios.delete(`${DELETE_USERS}/${id}`).then(({ data }) => {
+      console.log(data);;
+    }).catch(({ message }) => {
+      const msgTreated = treatMsg(message);
+      setErrorMsg(msgTreated);
+    });
   };
 
   const fetchUser = async ({ email, password }) => {
@@ -50,6 +69,9 @@ export default function ContextComp({ children }) {
 
   const state = {
     errorMsg,
+    allUsers,
+    fetchAllUser,
+    deleteUser,
     fetchUser,
     fetchCreateUser,
   };
