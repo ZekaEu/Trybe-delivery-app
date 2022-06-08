@@ -16,7 +16,7 @@ export default function CustomerProducts() {
         className="cart_button"
         type="button"
         data-testid="customer_products__button-cart"
-        disabled={ totalPrice === 0}
+        disabled={ totalPrice === 0 }
         onClick={ () => navigate('/customer/checkout') }
       >
         Ver Carrinho:
