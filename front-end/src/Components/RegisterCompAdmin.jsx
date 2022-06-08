@@ -7,6 +7,7 @@ export default function RegisterComp() {
   const [inputEmail, setInputEmail] = useState('');
   const [inputPassword, setInputPassword] = useState('');
   const [inputName, setInputName] = useState('');
+  const [inputRole, setInputRole] = useState('customer');
   const [isPasswordValid, setPasswordValid] = useState(false);
   const { fetchCreateUser, errorMsg } = useContext(DeliveryContext);
 
@@ -41,10 +42,10 @@ export default function RegisterComp() {
   };
 
   return (
-    <div className="card-body p-5 container-form shadow-box">
-      <h2 className="text-uppercase text-center mb-5">Create an account</h2>
-      <form>
-        <div className="form-outline mb-4">
+    <div className="card-body p-3 container-form shadow-box">
+      <h2 className="text-uppercase mb-2">Register new user</h2>
+      <form className="row">
+        <div className="col">
           <label className="form-label" htmlFor="form3Example1cg">
             <input
               type="text"
@@ -57,7 +58,7 @@ export default function RegisterComp() {
           </label>
         </div>
 
-        <div className="form-outline mb-4">
+        <div className="form-outline mb-4 col">
           <label className="form-label" htmlFor="form3Example3cg">
             <input
               type="email"
@@ -70,7 +71,7 @@ export default function RegisterComp() {
           </label>
         </div>
 
-        <div className="form-outline mb-4">
+        <div className="form-outline mb-4 col">
           <label className="form-label" htmlFor="form3Example4cg">
             <input
               type="password"
@@ -82,12 +83,22 @@ export default function RegisterComp() {
             Password
           </label>
         </div>
-        <span
-          data-testid="common_register__element-invalid_register"
-        >
-          { errorMsg || null }
-        </span>
-        <div className="d-flex justify-content-center">
+
+        <div className="form-outline mb-4 col">
+          <label className="form-label" htmlFor="form3Example4cg">
+            <select
+              className="form-control form-control-lg form-select"
+              value={ inputRole }
+              onChange={ ({ target: { value } }) => setInputRole(value) }
+            >
+              <option>customer</option>
+              <option>seller</option>
+              <option>administrator</option>
+            </select>
+            Role
+          </label>
+        </div>
+        <div className="col">
           <button
             type="button"
             className="btn btn-primary btn-block btn-lg gradient-custom-4 text-body"
@@ -98,21 +109,18 @@ export default function RegisterComp() {
               name: inputName,
               email: inputEmail,
               password: inputPassword,
-              role: 'customer',
+              role: inputRole,
             }) }
           >
             Register
           </button>
         </div>
-
-        <p className="text-center text-muted mt-5 mb-0">
-          Have already an account?
-          {' '}
-          <a href="/login" className="fw-bold text-body">
-            <u>Login here</u>
-          </a>
-        </p>
       </form>
+      <span
+          data-testid="common_register__element-invalid_register"
+        >
+          { errorMsg || null }
+        </span>
     </div>
   );
 }
