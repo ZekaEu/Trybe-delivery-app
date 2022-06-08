@@ -42,16 +42,20 @@ export default function RegisterComp() {
   };
 
   const createUser = async (user) => {
-    await fetchCreateUserAdmin(user);
+    const userLocalStorage = localStorage.getItem('user');
+    await fetchCreateUserAdmin(user, JSON.parse(userLocalStorage).token);
     await fetchAllUser();
     setInputName('');
     setInputEmail('');
     setInputPassword('');
     setInputRole('customer');
+    setNameValid(false);
+    setEmailValid(false);
+    setPasswordValid(false);
   };
 
   return (
-    <div className="card-body p-3 container-form shadow-box">
+    <div className="p-3 shadow-box">
       <h2 className="text-uppercase mb-2">Register new user</h2>
       <form className="row">
         <div className="col">
@@ -128,7 +132,7 @@ export default function RegisterComp() {
         </div>
       </form>
       <span
-        data-testid="common_register__element-invalid_register"
+        data-testid="admin_manage__element-invalid-register"
       >
         { errorMsg || null }
       </span>

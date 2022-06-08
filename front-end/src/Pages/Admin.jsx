@@ -10,7 +10,7 @@ export default function Admin() {
       <div className="mask d-flex align-items-center h-100 gradient-custom-3">
         <div className="container h-100">
           <RegisterCompAdmin />
-          <UserTable/>
+          <UserTable />
         </div>
       </div>
     </section>

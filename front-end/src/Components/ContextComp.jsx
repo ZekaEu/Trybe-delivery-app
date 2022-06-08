@@ -42,8 +42,9 @@ export default function ContextComp({ children }) {
       password,
     }).then(({ data }) => {
       // setUserInfos(data);
-      navigate('/customer/products');
       localStorage.setItem('user', JSON.stringify(data));
+      if (data.role !== 'administrator') return navigate('/customer/products');
+      return navigate('/admin/manage');
     }).catch(({ message }) => {
       const msgTreated = treatMsg(message);
       setErrorMsg(msgTreated);
@@ -67,12 +68,14 @@ export default function ContextComp({ children }) {
       });
   };
 
-  const fetchCreateUserAdmin = async ({ name, email, password, role }) => {
+  const fetchCreateUserAdmin = async ({ name, email, password, role }, token) => {
     await axios.post(CREATE_USER, {
       name,
       email,
       password,
       role,
+    }, {
+      headers: { Authorization: token },
     }).then(() => {
       console.log('Created User');
     })

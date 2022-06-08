@@ -23,7 +23,7 @@ const findUser = async (email, password) => {
     id: user.id,
     name: user.name,
     email: user.email,
-    role: user.role ? user.role : '',
+    role: user.role,
     token,
   };
   return { code: 200, data: safeUser };
