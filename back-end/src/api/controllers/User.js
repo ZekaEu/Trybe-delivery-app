@@ -1,5 +1,14 @@
 const User = require('../services/User');
 
+const findAll = async (req, res, next) => {
+  try {
+    const { code, data } = await User.findAll();
+    res.status(code).json(data);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const findUser = async (req, res, next) => {
   const { email, password } = req.body;
   try {
@@ -21,4 +30,14 @@ const createUser = async (req, res, next) => {
   }
 };
 
-module.exports = { findUser, createUser };
+const deleteUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { code, data } = await User.deleteUser({ id });
+    res.status(code).json(data);
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { findAll, findUser, createUser, deleteUser };

@@ -9,7 +9,7 @@ export default function RegisterComp() {
   const [inputName, setInputName] = useState('');
   const [inputRole, setInputRole] = useState('customer');
   const [isPasswordValid, setPasswordValid] = useState(false);
-  const { fetchCreateUser, errorMsg } = useContext(DeliveryContext);
+  const { fetchAllUser, fetchCreateUserAdmin, errorMsg } = useContext(DeliveryContext);
 
   const handleRegisterName = (userName) => {
     setInputName(userName);
@@ -41,6 +41,15 @@ export default function RegisterComp() {
     }
   };
 
+  const createUser = async (user) => {
+    await fetchCreateUserAdmin(user);
+    await fetchAllUser();
+    setInputName('');
+    setInputEmail('');
+    setInputPassword('');
+    setInputRole('customer');
+  }
+
   return (
     <div className="card-body p-3 container-form shadow-box">
       <h2 className="text-uppercase mb-2">Register new user</h2>
@@ -51,6 +60,7 @@ export default function RegisterComp() {
               type="text"
               id="form3Example1cg"
               className="form-control form-control-lg"
+              value={ inputName }
               data-testid="admin_manage__input-name"
               onChange={ ({ target: { value } }) => handleRegisterName(value) }
             />
@@ -64,6 +74,7 @@ export default function RegisterComp() {
               type="email"
               id="form3Example3cg"
               className="form-control form-control-lg"
+              value={ inputEmail }
               data-testid="admin_manage__input-email"
               onChange={ ({ target: { value } }) => handleRegisterEmail(value) }
             />
@@ -76,6 +87,7 @@ export default function RegisterComp() {
             <input
               type="password"
               id="form3Example4cg"
+              value={ inputPassword }
               data-testid="admin_manage__input-password"
               className="form-control form-control-lg"
               onChange={ ({ target: { value } }) => handleRegisterPassword(value) }
@@ -106,7 +118,7 @@ export default function RegisterComp() {
             data-testid="admin_manage__button-register"
             style={ { color: 'white' } }
             disabled={ !isEmailValid || !isNameValid || !isPasswordValid }
-            onClick={ () => fetchCreateUser({
+            onClick={ () => createUser({
               name: inputName,
               email: inputEmail,
               password: inputPassword,

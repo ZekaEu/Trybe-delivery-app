@@ -7,6 +7,11 @@ const User = require('../controllers/User');
 
 const UserRouter = Router();
 
+UserRouter.get(
+  '/users',
+  User.findAll,
+);
+
 UserRouter.post('/',
   emailValid,
   passwordValid,
@@ -19,4 +24,10 @@ UserRouter.post(
   passwordValid,
   User.createUser,
 );
+
+UserRouter.delete(
+  '/user/:id',
+  User.deleteUser,
+);
+
 module.exports = UserRouter;

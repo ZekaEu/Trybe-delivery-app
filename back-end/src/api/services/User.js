@@ -4,9 +4,17 @@ const { generateToken } = require('./auth');
 
 const passwordValid = (user, password) => md5(password) === user.password;
 
+const USER_NOT_FOUND = 'User not found!';
+
+const findAll = async () => {
+  const user = await User.findAll();
+  if (!user) return { code: 404, data: { message: USER_NOT_FOUND } };
+  return { code: 200, data: user };
+};
+
 const findUser = async (email, password) => {
   const user = await User.findOne({ where: { email } });
-  if (!user) return { code: 404, data: { message: 'User not found!' } };
+  if (!user) return { code: 404, data: { message: USER_NOT_FOUND } };
   if (!passwordValid(user, password)) { 
     return { code: 401, data: { message: 'Invalid email or password' } };
   }
@@ -35,4 +43,13 @@ const createUser = async ({ email, password, name, role }) => {
   return safeUser;
 };
 
-module.exports = { findUser, findOne, createUser };
+const deleteUser = async (id) => {
+  const userExists = await findOne(id);
+  if (!userExists) return { code: 404, data: { message: USER_NOT_FOUND } };
+
+  await User.destroy({ where: id });
+
+  return { code: 204, data: { message: 'Deleted user!' } };
+};
+
+module.exports = { findAll, findUser, findOne, createUser, deleteUser };

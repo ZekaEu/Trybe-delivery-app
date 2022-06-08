@@ -28,8 +28,8 @@ export default function ContextComp({ children }) {
   };
 
   const deleteUser = async (id) => {
-    await axios.delete(`${DELETE_USERS}/${id}`).then(({ data }) => {
-      console.log(data);;
+    await axios.delete(`${DELETE_USERS}/${id}`).then(() => {
+      console.log('Deleted User');
     }).catch(({ message }) => {
       const msgTreated = treatMsg(message);
       setErrorMsg(msgTreated);
@@ -67,6 +67,21 @@ export default function ContextComp({ children }) {
       });
   };
 
+  const fetchCreateUserAdmin = async ({ name, email, password, role }) => {
+    await axios.post(CREATE_USER, {
+      name,
+      email,
+      password,
+      role,
+    }).then(() => {
+      console.log('Created User');
+    })
+      .catch(({ message }) => {
+        const msgTreated = treatMsg(message);
+        setErrorMsg(msgTreated);
+      });
+  };
+
   const state = {
     errorMsg,
     allUsers,
@@ -74,6 +89,7 @@ export default function ContextComp({ children }) {
     deleteUser,
     fetchUser,
     fetchCreateUser,
+    fetchCreateUserAdmin,
   };
 
   return (

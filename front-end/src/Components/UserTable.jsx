@@ -26,16 +26,34 @@ export default function UserTable() {
       </thead>
       <tbody>
         { allUsers.length !== 0 && (
-          allUsers.map(({ id, name, email, role }) => (
+          allUsers.map(({ id, name, email, role }, index) => (
             <tr key={ `${id}-${name}` }>
-              <th scope="row">{ id }</th>
-              <td>{ name }</td>
-              <td>{ email }</td>
-              <td>{ role }</td>
+              <th
+                scope="row"
+                data-testid={`admin_manage__element-user-table-item-number-${index}`}
+              >
+                { id }
+              </th>
+              <td 
+                data-testid={`admin_manage__element-user-table-name-${index}`}
+              >
+                { name }
+              </td>
+              <td
+                data-testid={`admin_manage__element-user-table-email-${index}`}
+              >
+                { email }
+              </td>
+              <td
+                data-testid={`admin_manage__element-user-table-role-${index}`}
+              >
+                { role }
+              </td>
               <td>
                 <button
                   className="btn btn-outline-danger"
                   style={ { marginLeft: '10px' } }
+                  data-testid={`admin_manage__element-user-table-remove-${index}`}
                   type="button"
                   onClick={ () => removeUser(id)}
                 >
