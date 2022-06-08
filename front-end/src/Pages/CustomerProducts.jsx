@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProductsCards from '../Components/ProductsCards';
 import ProductsNavigation from '../Components/ProductsNavigation';
@@ -8,8 +8,6 @@ export default function CustomerProducts() {
   const navigate = useNavigate();
   const { totalPrice } = useContext(DeliveryContext);
 
-  useEffect(() => { console.log('opa') }, [totalPrice]);
-
   return (
     <div>
       <ProductsNavigation />
@@ -18,10 +16,13 @@ export default function CustomerProducts() {
         className="cart_button"
         type="button"
         data-testid="customer_products__button-cart"
-        // onClick={ navigate('/customer/checkout') }
+        disabled={ totalPrice === 0}
+        onClick={ () => navigate('/customer/checkout') }
       >
         Ver Carrinho:
-        { totalPrice }
+        <span data-testid="customer_products__checkout-bottom-value">
+          { totalPrice.toString().replace('.', ',') }
+        </span>
       </button>
     </div>
   );
