@@ -24,10 +24,13 @@ export default function ProductsCards() {
     if (!cart) {
       localStorage.setItem('cart', JSON.stringify([product]));
     } else {
+      console.log('entrou');
       const found = cart.find((obj) => obj.id === id);
       if (found) {
         found.quantity = quantity;
         localStorage.setItem('cart', JSON.stringify(cart));
+      } else {
+        localStorage.setItem('cart', JSON.stringify([...cart, product]));
       }
     }
   };
