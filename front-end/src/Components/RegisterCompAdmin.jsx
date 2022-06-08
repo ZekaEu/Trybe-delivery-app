@@ -7,8 +7,9 @@ export default function RegisterComp() {
   const [inputEmail, setInputEmail] = useState('');
   const [inputPassword, setInputPassword] = useState('');
   const [inputName, setInputName] = useState('');
+  const [inputRole, setInputRole] = useState('customer');
   const [isPasswordValid, setPasswordValid] = useState(false);
-  const { fetchCreateUser, errorMsg } = useContext(DeliveryContext);
+  const { fetchAllUser, fetchCreateUserAdmin, errorMsg } = useContext(DeliveryContext);
 
   const handleRegisterName = (userName) => {
     setInputName(userName);
@@ -40,79 +41,101 @@ export default function RegisterComp() {
     }
   };
 
+  const createUser = async (user) => {
+    const userLocalStorage = localStorage.getItem('user');
+    await fetchCreateUserAdmin(user, JSON.parse(userLocalStorage).token);
+    await fetchAllUser();
+    setInputName('');
+    setInputEmail('');
+    setInputPassword('');
+    setInputRole('customer');
+    setNameValid(false);
+    setEmailValid(false);
+    setPasswordValid(false);
+  };
+
   return (
-    <div className="card-body p-5 container-form shadow-box">
-      <h2 className="text-uppercase text-center mb-5">Create an account</h2>
-      <form>
-        <div className="form-outline mb-4">
+    <div className="p-3 shadow-box">
+      <h2 className="text-uppercase mb-2">Register new user</h2>
+      <form className="row">
+        <div className="col">
           <label className="form-label" htmlFor="form3Example1cg">
             <input
               type="text"
               id="form3Example1cg"
               className="form-control form-control-lg"
-              data-testid="common_register__input-name"
+              value={ inputName }
+              data-testid="admin_manage__input-name"
               onChange={ ({ target: { value } }) => handleRegisterName(value) }
             />
             Your Name
           </label>
         </div>
 
-        <div className="form-outline mb-4">
+        <div className="form-outline mb-4 col">
           <label className="form-label" htmlFor="form3Example3cg">
             <input
               type="email"
               id="form3Example3cg"
               className="form-control form-control-lg"
-              data-testid="common_register__input-email"
+              value={ inputEmail }
+              data-testid="admin_manage__input-email"
               onChange={ ({ target: { value } }) => handleRegisterEmail(value) }
             />
             Your Email
           </label>
         </div>
 
-        <div className="form-outline mb-4">
+        <div className="form-outline mb-4 col">
           <label className="form-label" htmlFor="form3Example4cg">
             <input
               type="password"
               id="form3Example4cg"
-              data-testid="common_register__input-password"
+              value={ inputPassword }
+              data-testid="admin_manage__input-password"
               className="form-control form-control-lg"
               onChange={ ({ target: { value } }) => handleRegisterPassword(value) }
             />
             Password
           </label>
         </div>
-        <span
-          data-testid="common_register__element-invalid_register"
-        >
-          { errorMsg || null }
-        </span>
-        <div className="d-flex justify-content-center">
+
+        <label className="form-label mb-4 col" htmlFor="form3Example4cg">
+          <select
+            className="form-control form-control-lg form-select"
+            value={ inputRole }
+            data-testid="admin_manage__select-role"
+            onChange={ ({ target: { value } }) => setInputRole(value) }
+          >
+            <option>customer</option>
+            <option>seller</option>
+            <option>administrator</option>
+          </select>
+          Role
+        </label>
+        <div className="col">
           <button
             type="button"
             className="btn btn-primary btn-block btn-lg gradient-custom-4 text-body"
-            data-testid="common_register__button-register"
+            data-testid="admin_manage__button-register"
             style={ { color: 'white' } }
             disabled={ !isEmailValid || !isNameValid || !isPasswordValid }
-            onClick={ () => fetchCreateUser({
+            onClick={ () => createUser({
               name: inputName,
               email: inputEmail,
               password: inputPassword,
-              role: 'customer',
+              role: inputRole,
             }) }
           >
             Register
           </button>
         </div>
-
-        <p className="text-center text-muted mt-5 mb-0">
-          Have already an account?
-          {' '}
-          <a href="/login" className="fw-bold text-body">
-            <u>Login here</u>
-          </a>
-        </p>
       </form>
+      <span
+        data-testid="admin_manage__element-invalid-register"
+      >
+        { errorMsg || null }
+      </span>
     </div>
   );
 }

@@ -3,11 +3,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import DeliveryContext from '../Context/DeliveryContext';
-import { CHECK_USER, CREATE_USER } from '../services/URLs';
+import { CHECK_USER, CREATE_USER, GET_USERS, DELETE_USERS } from '../services/URLs';
 
 export default function ContextComp({ children }) {
   // const [userInfos, setUserInfos] = useState([]);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [allUsers, setAllUsers] = useState([]);
   const navigate = useNavigate();
 
   const treatMsg = (msg) => {
@@ -17,14 +18,33 @@ export default function ContextComp({ children }) {
     return msg;
   };
 
+  const fetchAllUser = async () => {
+    await axios.get(GET_USERS).then(({ data }) => {
+      setAllUsers([...data]);
+    }).catch(({ message }) => {
+      const msgTreated = treatMsg(message);
+      setErrorMsg(msgTreated);
+    });
+  };
+
+  const deleteUser = async (id) => {
+    await axios.delete(`${DELETE_USERS}/${id}`).then(() => {
+      console.log('Deleted User');
+    }).catch(({ message }) => {
+      const msgTreated = treatMsg(message);
+      setErrorMsg(msgTreated);
+    });
+  };
+
   const fetchUser = async ({ email, password }) => {
     await axios.post(CHECK_USER, {
       email,
       password,
     }).then(({ data }) => {
       // setUserInfos(data);
-      navigate('/customer/products');
       localStorage.setItem('user', JSON.stringify(data));
+      if (data.role !== 'administrator') return navigate('/customer/products');
+      return navigate('/admin/manage');
     }).catch(({ message }) => {
       const msgTreated = treatMsg(message);
       setErrorMsg(msgTreated);
@@ -48,10 +68,31 @@ export default function ContextComp({ children }) {
       });
   };
 
+  const fetchCreateUserAdmin = async ({ name, email, password, role }, token) => {
+    await axios.post(CREATE_USER, {
+      name,
+      email,
+      password,
+      role,
+    }, {
+      headers: { Authorization: token },
+    }).then(() => {
+      console.log('Created User');
+    })
+      .catch(({ message }) => {
+        const msgTreated = treatMsg(message);
+        setErrorMsg(msgTreated);
+      });
+  };
+
   const state = {
     errorMsg,
+    allUsers,
+    fetchAllUser,
+    deleteUser,
     fetchUser,
     fetchCreateUser,
+    fetchCreateUserAdmin,
   };
 
   return (

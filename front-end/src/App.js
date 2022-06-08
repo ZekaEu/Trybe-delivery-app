@@ -5,6 +5,7 @@ import './ProductsPage.css';
 import CustomerProducts from './Pages/CustomerProducts';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
+import Admin from './Pages/Admin';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route exact path="/login" element={ <Login /> } />
       <Route exact path="/register" element={ <Register /> } />
       <Route exact path="/customer/products" element={ <CustomerProducts /> } />
+      <Route exact path="/admin/manage" element={ <Admin /> } />
     </Routes>
   );
 }
