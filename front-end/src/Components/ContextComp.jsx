@@ -9,6 +9,7 @@ export default function ContextComp({ children }) {
   // const [userInfos, setUserInfos] = useState([]);
   const [errorMsg, setErrorMsg] = useState(null);
   const [allUsers, setAllUsers] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
   const navigate = useNavigate();
 
   const treatMsg = (msg) => {
@@ -93,6 +94,8 @@ export default function ContextComp({ children }) {
     fetchUser,
     fetchCreateUser,
     fetchCreateUserAdmin,
+    setTotalPrice,
+    totalPrice,
   };
 
   return (

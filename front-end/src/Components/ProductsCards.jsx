@@ -1,8 +1,10 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { GET_PRODUCTS } from '../services/URLs';
+import DeliveryContext from '../Context/DeliveryContext';
 
 export default function ProductsCards() {
+  const { setTotalPrice } = useContext(DeliveryContext);
   const [products, setProducts] = useState([]);
   const [arrQt, setArrQt] = useState([]);
 
@@ -23,6 +25,13 @@ export default function ProductsCards() {
     const cart = JSON.parse(localStorage.getItem('cart'));
     if (!cart) {
       localStorage.setItem('cart', JSON.stringify([product]));
+      const newCart = JSON.parse(localStorage.getItem('cart'));
+      const totalPrice = newCart.reduce(
+        (acc, item) => acc + Number(item.price * item.quantity),
+        0,
+      );
+      console.log(totalPrice);
+      setTotalPrice(totalPrice);
     } else {
       console.log('entrou');
       const found = cart.find((obj) => obj.id === id);
@@ -32,6 +41,12 @@ export default function ProductsCards() {
       } else {
         localStorage.setItem('cart', JSON.stringify([...cart, product]));
       }
+      const totalPrice = cart.reduce(
+        (acc, item) => acc + Number(item.price * item.quantity),
+        0,
+      );
+      console.log(totalPrice);
+      setTotalPrice(totalPrice);
     }
   };
 
