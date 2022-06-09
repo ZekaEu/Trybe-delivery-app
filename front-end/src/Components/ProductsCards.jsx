@@ -7,6 +7,19 @@ export default function ProductsCards() {
   const { setTotalPrice } = useContext(DeliveryContext);
   const [products, setProducts] = useState([]);
   const [arrQt, setArrQt] = useState([]);
+  const [addProduct, setAddProduct] = useState(false);
+
+  useEffect(() => {
+    const cart = JSON.parse(localStorage.getItem('cart'));
+    if (cart) {
+      const totalPrice = cart.reduce(
+        (acc, item) => acc + Number(item.price * item.quantity),
+        0,
+      );
+      setTotalPrice(totalPrice.toFixed(2));
+      setAddProduct(false);
+    }
+  }, [addProduct]);
 
   const fetchProducts = async () => {
     await axios.get(GET_PRODUCTS)
@@ -25,29 +38,17 @@ export default function ProductsCards() {
     const cart = JSON.parse(localStorage.getItem('cart'));
     if (!cart) {
       localStorage.setItem('cart', JSON.stringify([product]));
-      const newCart = JSON.parse(localStorage.getItem('cart'));
-      const totalPrice = newCart.reduce(
-        (acc, item) => acc + Number(item.price * item.quantity),
-        0,
-      );
-      console.log(totalPrice);
-      setTotalPrice(totalPrice);
     } else {
-      console.log('entrou');
       const found = cart.find((obj) => obj.id === id);
       if (found) {
         found.quantity = quantity;
-        localStorage.setItem('cart', JSON.stringify(cart));
+        const newCart = cart.filter((prd) => prd.quantity !== 0);
+        localStorage.setItem('cart', JSON.stringify(newCart));
       } else {
         localStorage.setItem('cart', JSON.stringify([...cart, product]));
       }
-      const totalPrice = cart.reduce(
-        (acc, item) => acc + Number(item.price * item.quantity),
-        0,
-      );
-      console.log(totalPrice);
-      setTotalPrice(totalPrice);
     }
+    setAddProduct(true);
   };
 
   const decreaseQuantity = ({ i, id, name, price, urlImage }) => {
@@ -65,7 +66,6 @@ export default function ProductsCards() {
     arrQt[i] += 1;
     setArrQt([...arrQt]);
     updateStorage({ id, name, price, urlImage, quantity: arrQt[i] });
-    console.log(arrQt);
   };
 
   useEffect(() => {
