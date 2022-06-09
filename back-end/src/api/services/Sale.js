@@ -18,8 +18,7 @@ const createSale = async ({
   }, { transaction: t });
 
   const salesProducts = arrProducts.map(({ productId, quantity }) =>
-    SalesProduct.createSalesProduct({ saleId: sale.id, productId, quantity }, t),
-  );
+    SalesProduct.createSalesProduct({ saleId: sale.id, productId, quantity }, t));
 
   await Promise.all(salesProducts);
 
