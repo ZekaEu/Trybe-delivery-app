@@ -42,7 +42,7 @@ export default function ProductsCards() {
       const found = cart.find((obj) => obj.id === id);
       if (found) {
         found.quantity = quantity;
-        const newCart = cart.filter((product) => product.quantity !== 0);
+        const newCart = cart.filter((prd) => prd.quantity !== 0);
         localStorage.setItem('cart', JSON.stringify(newCart));
       } else {
         localStorage.setItem('cart', JSON.stringify([...cart, product]));

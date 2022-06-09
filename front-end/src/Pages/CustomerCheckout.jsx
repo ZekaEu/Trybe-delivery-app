@@ -1,26 +1,29 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import ProductsNavigation from '../Components/ProductsNavigation';
 import DeliveryContext from '../Context/DeliveryContext';
-
+import { orderTableItem, orderTableName,
+  orderTableQt, orderTableRemove,
+  orderTableTotal, orderTableUnitPrice } from '../services/dataTestids';
 
 export default function CustomerProducts() {
   const [removeItem, setRemoveItem] = useState('');
-  const { totalPrice, setTotalPrice, fetchSellers, sellers } = useContext(DeliveryContext);
+  const { totalPrice,
+    setTotalPrice, fetchSellers, sellers } = useContext(DeliveryContext);
+
   const cart = JSON.parse(localStorage.getItem('cart'));
-  useEffect(()=> {
+  useEffect(() => {
     fetchSellers();
     if (cart) {
-      const totalPrice = cart.reduce(
+      const total = cart.reduce(
         (acc, item) => acc + Number(item.price * item.quantity),
         0,
       );
-      setTotalPrice(totalPrice.toFixed(2));
+      setTotalPrice(total.toFixed(2));
     }
     const newCart = cart.filter((product) => product.id !== removeItem);
     localStorage.setItem('cart', JSON.stringify(newCart));
     setRemoveItem('');
-  }, [removeItem])
+  }, [cart, fetchSellers, removeItem, setTotalPrice]);
 
   return (
     <div>
@@ -38,41 +41,42 @@ export default function CustomerProducts() {
         </thead>
         <tbody>
           { cart.length !== 0 && (
-            cart.map(({ id, name, price, urlImage, quantity }, index) => (
+            cart.map(({ id, name, price, quantity }, index) => (
               <tr key={ `${id}-${name}` }>
                 <th
                   scope="row"
-                  data-testid={ `customer_checkout__element-order-table-item-number-${index}` }
+                  data-testid={ `${orderTableItem}${index}` }
                 >
                   { index + 1 }
                 </th>
                 <td
-                  data-testid={ `customer_checkout__element-order-table-name-${index}` }
+                  data-testid={ `${orderTableName}${index}` }
                 >
                   { name }
                 </td>
                 <td
-                  data-testid={ `customer_checkout__element-order-table-quantity-${index}` }
+                  data-testid={ `${orderTableQt}${index}` }
                 >
                   { quantity }
                 </td>
                 <td
-                  data-testid={ `customer_checkout__element-order-table-unit-price-${index}` }
+                  data-testid={ `${orderTableUnitPrice}${index}` }
                 >
-                  { price }
+                  { (price).replace('.', ',') }
                 </td>
                 <td
-                  data-testid={ `customer_checkout__element-order-table-sub-total-${index}` }
+                  data-testid={ `${orderTableTotal}${index}` }
                 >
-                  { Number(price) * Number(quantity) }
+                  { (Number(price) * Number(quantity))
+                    .toFixed(2).replace('.', ',') }
                 </td>
                 <td>
                   <button
                     className="btn btn-outline-danger"
                     style={ { marginLeft: '10px' } }
-                    data-testid={ `customer_checkout__element-order-table-remove-${index}` }
+                    data-testid={ `${orderTableRemove}${index}` }
                     type="button"
-                    onClick={() => setRemoveItem(id)}
+                    onClick={ () => setRemoveItem(id) }
                   >
                     Remover
                   </button>
@@ -88,24 +92,47 @@ export default function CustomerProducts() {
       >
         Total: R$
         <span data-testid="customer_products__checkout-bottom-value">
-          { totalPrice.toString().replace('.', ',') }
+          { totalPrice.replace('.', ',') }
         </span>
       </div>
-      <div >
-        <label for="vendedores" className="form-label mb-4 col">Vendedor Responsável</label>
-        <select name="vendedores" id="vendedores" data-testid="customer_checkout__select-seller">
-          {sellers.map((seller) => 
-            <option value={seller.id}>{seller.name}</option>
-          )}
-        </select>
-        <label for="address" className="form-label mb-4 col">Endereço</label>
-        <input type="text" name="address" id="address" data-testid="customer_checkout__input-address" />
-        <label for="addressNumber" className="form-label mb-4 col">Número</label>
-        <input type="text" name="addressNumber" id="addressNumber" data-testid="customer_checkout__input-addressNumber" />
+      <div>
+        <label htmlFor="vendedores" className="form-label mb-4 col">
+          Vendedor
+          <select
+            name="vendedores"
+            id="vendedores"
+            data-testid="customer_checkout__select-seller"
+          >
+            {sellers.map((seller) => (
+              <option key={ seller.id } value={ seller.id }>{seller.name}</option>
+            ))}
+          </select>
+        </label>
+        <label
+          htmlFor="address"
+          className="form-label mb-4 col"
+        >
+          Endereço
+          <input
+            type="text"
+            name="address"
+            id="address"
+            data-testid="customer_checkout__input-address"
+          />
+        </label>
+        <label htmlFor="addressNumber" className="form-label mb-4 col">
+          Número
+          <input
+            type="text"
+            name="addressNumber"
+            id="addressNumber"
+            data-testid="customer_checkout__input-addressNumber"
+          />
+        </label>
         <button
           className="btn btn-outline-primary"
           style={ { marginLeft: '10px' } }
-          data-testid={ `customer_checkout__button-submit-order` }
+          data-testid="customer_checkout__button-submit-order"
           type="button"
         >
           FINALIZAR PEDIDO
