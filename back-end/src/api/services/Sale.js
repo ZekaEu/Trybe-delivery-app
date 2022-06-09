@@ -9,12 +9,11 @@ const createSale = async ({
   totalPrice,
   deliveryAddress,
   deliveryNumber,
-  saleDate,
   status,
   arrProducts,
  }, t) => {
   const sale = await Sale.create({
-    userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, saleDate, status,
+    userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, status,
   }, { transaction: t });
 
   const salesProducts = arrProducts.map(({ productId, quantity }) =>

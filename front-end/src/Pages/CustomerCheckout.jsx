@@ -1,16 +1,24 @@
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import React, { useContext, useEffect, useState } from 'react';
 import ProductsNavigation from '../Components/ProductsNavigation';
 import DeliveryContext from '../Context/DeliveryContext';
 import { orderTableItem, orderTableName,
   orderTableQt, orderTableRemove,
   orderTableTotal, orderTableUnitPrice } from '../services/dataTestids';
+import { POST_SALE } from '../services/URLs';
 
 export default function CustomerProducts() {
+  const navigate = useNavigate();
   const [removeItem, setRemoveItem] = useState('');
+  const [sellerId, setSellerId] = useState(2);
+  const [deliveryAddress, setDeliveryAddress] = useState('');
+  const [deliveryNumber, setDeliveryNumber] = useState('');
   const { totalPrice,
     setTotalPrice, fetchSellers, sellers } = useContext(DeliveryContext);
 
   const cart = JSON.parse(localStorage.getItem('cart'));
+  const user = JSON.parse(localStorage.getItem('user'));
   useEffect(() => {
     fetchSellers();
     if (cart) {
@@ -24,6 +32,27 @@ export default function CustomerProducts() {
     localStorage.setItem('cart', JSON.stringify(newCart));
     setRemoveItem('');
   }, [cart, fetchSellers, removeItem, setTotalPrice]);
+
+  const completePurchase = async () => {
+    const arrProducts = [];
+    cart.map((sku)=>{
+      const item = {productId: sku.id, quantity: sku.quantity}
+      arrProducts.push(item);
+    });
+    const requestParam ={
+      userId: user.id,
+      sellerId,
+      totalPrice,
+      deliveryAddress,
+      deliveryNumber,
+      status: 'Pendente',
+      arrProducts,
+     }
+     console.log(requestParam)
+    const result = await axios({ method:'post', url:POST_SALE, data:requestParam });
+    console.log(result)
+    //navigate('/customer/checkout')
+  }
 
   return (
     <div>
@@ -102,6 +131,9 @@ export default function CustomerProducts() {
             name="vendedores"
             id="vendedores"
             data-testid="customer_checkout__select-seller"
+            value= { sellerId }
+            onChange= {({ target: { value } }) => setSellerId(value)}
+            
           >
             {sellers.map((seller) => (
               <option key={ seller.id } value={ seller.id }>{seller.name}</option>
@@ -118,6 +150,8 @@ export default function CustomerProducts() {
             name="address"
             id="address"
             data-testid="customer_checkout__input-address"
+            value={ deliveryAddress }
+            onChange= {({ target: { value } }) => setDeliveryAddress(value)}
           />
         </label>
         <label htmlFor="addressNumber" className="form-label mb-4 col">
@@ -127,6 +161,8 @@ export default function CustomerProducts() {
             name="addressNumber"
             id="addressNumber"
             data-testid="customer_checkout__input-addressNumber"
+            value={ deliveryNumber }
+            onChange= {({ target: { value } }) => setDeliveryNumber(value)}
           />
         </label>
         <button
@@ -134,6 +170,7 @@ export default function CustomerProducts() {
           style={ { marginLeft: '10px' } }
           data-testid="customer_checkout__button-submit-order"
           type="button"
+          onClick={() => completePurchase()}
         >
           FINALIZAR PEDIDO
         </button>
