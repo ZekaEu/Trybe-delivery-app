@@ -1,6 +1,6 @@
 const User = require('../services/User');
 
-const findAll = async (req, res, next) => {
+const findAll = async (_req, res, next) => {
   try {
     const { code, data } = await User.findAll();
     res.status(code).json(data);
@@ -40,4 +40,13 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
-module.exports = { findAll, findUser, createUser, deleteUser };
+const findAllSellers = async (_req, res, next) => {
+  try {
+    const { code, data } = await User.findSellers();
+    res.status(code).json(data);
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { findAll, findUser, createUser, deleteUser, findAllSellers };
