@@ -3,13 +3,20 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import DeliveryContext from '../Context/DeliveryContext';
-import { CHECK_USER, CREATE_USER, GET_USERS, DELETE_USERS } from '../services/URLs';
+import {
+  CHECK_USER,
+  CREATE_USER,
+  GET_USERS,
+  DELETE_USERS,
+  GET_SELLER,
+} from '../services/URLs';
 
 export default function ContextComp({ children }) {
   // const [userInfos, setUserInfos] = useState([]);
   const [errorMsg, setErrorMsg] = useState(null);
   const [allUsers, setAllUsers] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [sellers, setSellers] = useState([]);
   const navigate = useNavigate();
 
   const treatMsg = (msg) => {
@@ -22,6 +29,15 @@ export default function ContextComp({ children }) {
   const fetchAllUser = async () => {
     await axios.get(GET_USERS).then(({ data }) => {
       setAllUsers([...data]);
+    }).catch(({ message }) => {
+      const msgTreated = treatMsg(message);
+      setErrorMsg(msgTreated);
+    });
+  };
+
+  const fetchSellers = async () => {
+    await axios.get(GET_SELLER).then(({ data }) => {
+      setSellers([...data]);
     }).catch(({ message }) => {
       const msgTreated = treatMsg(message);
       setErrorMsg(msgTreated);
@@ -96,6 +112,9 @@ export default function ContextComp({ children }) {
     fetchCreateUserAdmin,
     setTotalPrice,
     totalPrice,
+    sellers,
+    setSellers,
+    fetchSellers,
   };
 
   return (
