@@ -29,6 +29,12 @@ const findUser = async (email, password) => {
   return { code: 200, data: safeUser };
 };
 
+const findSellers = async () => {
+  const sellers = await User.findAll({ where: { role: 'seller' } });
+  if (!sellers) return { code: 404, data: { message: USER_NOT_FOUND } };
+  return { code: 200, data: sellers };
+};
+
 const findOne = async (params) => User.findOne({ where: params });
 
 const createUser = async ({ email, password, name, role }) => {
@@ -52,4 +58,4 @@ const deleteUser = async (id) => {
   return { code: 204, data: { message: 'Deleted user!' } };
 };
 
-module.exports = { findAll, findUser, findOne, createUser, deleteUser };
+module.exports = { findAll, findUser, findOne, createUser, deleteUser, findSellers };
