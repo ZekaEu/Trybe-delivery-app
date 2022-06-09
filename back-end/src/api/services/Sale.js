@@ -24,4 +24,9 @@ const createSale = async ({
   return { code: 201, data: sale };
 };
 
-module.exports = { findOne, createSale };
+const getSales = async () => {
+  const sales = await Sale.findAll();
+  return { code: 200, data: sales };
+};
+
+module.exports = { findOne, createSale, getSales };

@@ -18,4 +18,13 @@ const createSale = async (req, res, next) => {
   }
 };
 
-module.exports = { createSale };
+const getSales = async (_req, res, next) => {
+  try {
+    const { code, data } = await Sale.getSales();
+    return res.status(code).json(data);
+  } catch (err) {
+    return next(err);
+  }
+};
+
+module.exports = { createSale, getSales };
