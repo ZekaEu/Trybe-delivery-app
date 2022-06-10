@@ -4,20 +4,6 @@ import DeliveryContext from '../Context/DeliveryContext';
 
 export default function SalesCard() {
   const { fetchSales, sales } = useContext(DeliveryContext);
-  // const [mockSales, setMockSales] = useState([
-  //   {
-  //     id: 1,
-  //     totalPrice: 53.24,
-  //     status: 'Preparando',
-  //     saleDate: '09/06/2022',
-  //   },
-  //   {
-  //     id: 2,
-  //     totalPrice: 123.56,
-  //     status: 'Pendente',
-  //     saleDate: '09/06/2022',
-  //   },
-  // ]);
 
   const getInfos = async () => {
     const { token } = JSON.parse(localStorage.getItem('user'));
@@ -30,6 +16,7 @@ export default function SalesCard() {
 
   const treatDate = (date, id) => {
     const noon = 12;
+    const magic = 10;
     const rightFormat = new Date(date);
     const dd = rightFormat.getDate();
     const mm = rightFormat.getMonth() + 1;
@@ -40,7 +27,7 @@ export default function SalesCard() {
     return (
       <div className="date">
         <span data-testid={ `customer_orders__element-order-date-${id}` }>
-          { `${dd}/${mm}/${yyyy}` }
+          { `${dd < magic ? `0${dd}` : dd}/${mm < magic ? `0${mm}` : mm}/${yyyy}` }
         </span>
         <span>
           { `${hh}:${min}:${sec}${hh >= noon ? 'PM' : 'AM'}` }
