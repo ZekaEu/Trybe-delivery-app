@@ -26,6 +26,7 @@ const createSale = async ({
 
 const getSales = async () => {
   const sales = await Sale.findAll();
+  console.log(sales);
   return { code: 200, data: sales };
 };
 
