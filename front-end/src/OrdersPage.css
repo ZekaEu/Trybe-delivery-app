@@ -1,8 +1,8 @@
 .sales-container {
   border-radius: 15px;
-  box-shadow: rgba(0, 0, 0, 0.4) 0 2px 4px
-    rgba(0, 0, 0, 0.3) 0 7px 13px -3px , rgba(0, 0, 0, 0.2) 0 -3px 0 inset;
+  box-shadow: 0 2px 4px #0006 , 0 7px 13px -3px #0000004d , 0 -3px 0 inset #0003;
   display: flex;
+  flex-wrap: wrap;
   height: 80vh;
   margin: 2% auto;
   padding: 1%;
