@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
-import DeliveryContext from "../Context/DeliveryContext";
+import React, { useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import DeliveryContext from '../Context/DeliveryContext';
 
 export default function SalesCard() {
   const { fetchSales, sales } = useContext(DeliveryContext);
