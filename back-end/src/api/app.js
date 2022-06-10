@@ -1,9 +1,9 @@
 const express = require('express');
+const cors = require('cors');
 const productRouter = require('./routes/Product');
 const UserRouter = require('./routes/User');
 const SaleRouter = require('./routes/Sale');
 const errorMiddleware = require('./middlewares/errorMiddleware');
-const cors = require('cors');
 
 const app = express();
 
