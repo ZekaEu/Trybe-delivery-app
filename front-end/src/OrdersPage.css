@@ -1,17 +1,17 @@
 .sales-container {
-  /* box-shadow: rgba(0, 0, 0, 0.349) 0px 22px 70px 4px; */
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0 2px 4px
+    rgba(0, 0, 0, 0.3) 0 7px 13px -3px , rgba(0, 0, 0, 0.2) 0 -3px 0 inset;
   display: flex;
   height: 80vh;
-  margin: 2% auto 2%;
+  margin: 2% auto;
   padding: 1%;
   width: 90vw;
 }
 
 .sale-card {
   align-items: center;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0 2px 8px;
   display: flex;
   height: 100px;
   justify-content: space-around;
@@ -20,8 +20,7 @@
 }
 
 .order {
-  align-items: center;
-  /* border: 1px solid black; */
+  align-items: center;/* border: 1px solid black; */
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -29,8 +28,7 @@
   width: 100%;
 }
 
-.status {
-  /* border: 1px solid black; */
+.status {/* border: 1px solid black; */
   align-items: center;
   display: flex;
   height: 100%;
@@ -38,8 +36,7 @@
   width: 100%;
 }
 
-.date-and-price {
-  /* border: 1px solid black; */
+.date-and-price {/* border: 1px solid black; */
   align-items: center;
   display: flex;
   flex-direction: column;
