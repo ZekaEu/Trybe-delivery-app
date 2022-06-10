@@ -9,6 +9,7 @@ import {
   GET_USERS,
   DELETE_USERS,
   GET_SELLER,
+  GET_ORDER,
 } from '../services/URLs';
 
 export default function ContextComp({ children }) {
@@ -17,6 +18,7 @@ export default function ContextComp({ children }) {
   const [allUsers, setAllUsers] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [sellers, setSellers] = useState([]);
+  const [order, setOrder] = useState({});
   const navigate = useNavigate();
 
   const treatMsg = (msg) => {
@@ -102,6 +104,13 @@ export default function ContextComp({ children }) {
       });
   };
 
+  const fetchOrder = async (id) => {
+    await axios.get(`${GET_ORDER}${id}`).then(({ data }) => {
+      console.log(data);
+      setOrder({...data});
+    });
+  };
+
   const state = {
     errorMsg,
     allUsers,
@@ -115,6 +124,9 @@ export default function ContextComp({ children }) {
     sellers,
     setSellers,
     fetchSellers,
+    fetchOrder,
+    order,
+    setOrder,
   };
 
   return (
