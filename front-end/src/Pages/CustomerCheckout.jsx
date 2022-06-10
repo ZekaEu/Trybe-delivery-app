@@ -34,12 +34,9 @@ export default function CustomerProducts() {
   }, [cart, fetchSellers, removeItem, setTotalPrice]);
 
   const completePurchase = async () => {
-    const arrProducts = [];
-    cart.map((sku)=>{
-      const item = {productId: sku.id, quantity: sku.quantity}
-      arrProducts.push(item);
-    });
-    const requestParam ={
+    const arrProducts = cart
+      .map((sku) => ({ productId: sku.id, quantity: sku.quantity }));
+    const requestParam = {
       userId: user.id,
       sellerId,
       totalPrice,
@@ -47,12 +44,17 @@ export default function CustomerProducts() {
       deliveryNumber,
       status: 'Pendente',
       arrProducts,
-     }
-     console.log(requestParam)
-    const result = await axios({ method:'post', url:POST_SALE, data:requestParam });
-    console.log(result)
-    //navigate('/customer/checkout')
-  }
+    };
+
+    const { data } = await axios({
+      method: 'post',
+      url: POST_SALE,
+      data: requestParam,
+      headers: { Authorization: user.token },
+    });
+
+    navigate(`/customer/orders/${data.id}`);
+  };
 
   return (
     <div>
@@ -116,7 +118,7 @@ export default function CustomerProducts() {
         </tbody>
       </table>
       <div
-        className="checkout_total_price"
+        className="checkout_total_price d-flex justify-content-center"
         data-testid="customer_checkout__element-order-total-price"
       >
         Total: R$
@@ -124,16 +126,16 @@ export default function CustomerProducts() {
           { totalPrice.replace('.', ',') }
         </span>
       </div>
-      <div>
-        <label htmlFor="vendedores" className="form-label mb-4 col">
+      <div className="shadow-box p-2 d-flex justify-content-center mt-5">
+        <label htmlFor="vendedores" className="form-label mr-3">
           Vendedor
           <select
             name="vendedores"
             id="vendedores"
+            className="form-control form-control-sm form-select"
             data-testid="customer_checkout__select-seller"
-            value= { sellerId }
-            onChange= {({ target: { value } }) => setSellerId(value)}
-            
+            value={ sellerId }
+            onChange={ ({ target: { value } }) => setSellerId(value) }
           >
             {sellers.map((seller) => (
               <option key={ seller.id } value={ seller.id }>{seller.name}</option>
@@ -142,38 +144,41 @@ export default function CustomerProducts() {
         </label>
         <label
           htmlFor="address"
-          className="form-label mb-4 col"
+          className="form-label mr-3"
         >
           Endereço
           <input
             type="text"
             name="address"
+            className="form-control form-control-sm mr-3"
             id="address"
             data-testid="customer_checkout__input-address"
             value={ deliveryAddress }
-            onChange= {({ target: { value } }) => setDeliveryAddress(value)}
+            onChange={ ({ target: { value } }) => setDeliveryAddress(value) }
           />
         </label>
-        <label htmlFor="addressNumber" className="form-label mb-4 col">
+        <label htmlFor="addressNumber" className="form-label mr-3">
           Número
           <input
             type="text"
             name="addressNumber"
+            className="form-control form-control-sm"
             id="addressNumber"
             data-testid="customer_checkout__input-addressNumber"
             value={ deliveryNumber }
-            onChange= {({ target: { value } }) => setDeliveryNumber(value)}
+            onChange={ ({ target: { value } }) => setDeliveryNumber(value) }
           />
         </label>
-        <button
-          className="btn btn-outline-primary"
-          style={ { marginLeft: '10px' } }
-          data-testid="customer_checkout__button-submit-order"
-          type="button"
-          onClick={() => completePurchase()}
-        >
-          FINALIZAR PEDIDO
-        </button>
+        <div>
+          <button
+            className="btn btn-outline-primary mt-4 btn-sm"
+            data-testid="customer_checkout__button-submit-order"
+            type="button"
+            onClick={ () => completePurchase() }
+          >
+            FINALIZAR PEDIDO
+          </button>
+        </div>
       </div>
 
     </div>
