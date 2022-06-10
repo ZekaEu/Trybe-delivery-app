@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import FormsComp from '../Components/FormsComp';
 
 export default function Login() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isLogged = JSON.parse(localStorage.getItem('user'));
+    if (isLogged) navigate('/customer/products');
+  }, []);
+
   return (
     <section className="vh-100">
       <h2 className="app-title">Delivery App</h2>
