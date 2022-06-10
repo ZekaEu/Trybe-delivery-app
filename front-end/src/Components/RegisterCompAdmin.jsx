@@ -116,7 +116,7 @@ export default function RegisterComp() {
         <div className="col">
           <button
             type="button"
-            className="btn btn-primary btn-block btn-lg gradient-custom-4 text-body"
+            className="btn btn-primary btn-block btn-sm gradient-custom-4 text-body"
             data-testid="admin_manage__button-register"
             style={ { color: 'white' } }
             disabled={ !isEmailValid || !isNameValid || !isPasswordValid }

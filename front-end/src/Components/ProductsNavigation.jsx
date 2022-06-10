@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import DeliveryContext from '../Context/DeliveryContext';
 
 export default function ProductsNavigation() {
+  const { setTotalPrice } = useContext(DeliveryContext);
   const [userName, setUserName] = useState('');
   const navigate = useNavigate();
 
@@ -12,6 +14,7 @@ export default function ProductsNavigation() {
 
   const handleLogOut = () => {
     localStorage.clear();
+    setTotalPrice(0);
     navigate('/login');
   };
 
