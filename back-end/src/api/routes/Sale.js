@@ -8,4 +8,7 @@ SaleRouter.post(
   '/',
   Sale.createSale,
 );
+
+SaleRouter.get('/:id', Sale.getOrderById);
+
 module.exports = SaleRouter;

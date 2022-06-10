@@ -18,4 +18,15 @@ const createSale = async (req, res, next) => {
   }
 };
 
-module.exports = { createSale };
+const getOrderById = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+  const { code, data } = await Sale.getOrderById(id);
+  
+  return res.status(code).json(data);
+  } catch (err) {
+    return next(err);
+  }
+};
+
+module.exports = { createSale, getOrderById };
