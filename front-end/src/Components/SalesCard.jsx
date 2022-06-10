@@ -62,7 +62,7 @@ export default function SalesCard() {
               <div className="date-and-price">
                 { treatDate(saleDate, id) }
                 <span data-testid={ `customer_orders__element-card-price-${id}` }>
-                  {totalPrice}
+                  {totalPrice.replace('.', ',')}
                 </span>
               </div>
             </div>
