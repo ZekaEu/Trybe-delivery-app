@@ -31,7 +31,7 @@ export default function CustomerProducts() {
     const newCart = cart.filter((product) => product.id !== removeItem);
     localStorage.setItem('cart', JSON.stringify(newCart));
     setRemoveItem('');
-  }, [cart, fetchSellers, removeItem, setTotalPrice]);
+  }, [removeItem]);
 
   const completePurchase = async () => {
     const arrProducts = cart
@@ -52,8 +52,9 @@ export default function CustomerProducts() {
       data: requestParam,
       headers: { Authorization: user.token },
     });
-
+    localStorage.removeItem('cart');
     navigate(`/customer/orders/${data.id}`);
+    setTotalPrice(0);
   };
 
   return (
