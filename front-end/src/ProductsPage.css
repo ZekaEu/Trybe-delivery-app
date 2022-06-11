@@ -26,8 +26,7 @@
 .item {
   align-items: center;
   border-radius: 2px;
-  box-shadow: rgba(6, 24, 44, 0.4) 0 0 0 2px rgba(6, 24, 44, 0.65) 0 4px 6px -1px
-    rgba(255, 255, 255, 0.08) 0 1px 0 inset;
+  box-shadow: #06182c66 0 0 0 2px , #06182ca6 0 4px 6px -1px , #ffffff14 0 1px 0 inset;
   display: flex;
   flex-direction: column;
   height: 200px;

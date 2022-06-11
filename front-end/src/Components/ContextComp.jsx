@@ -9,6 +9,7 @@ import {
   GET_USERS,
   DELETE_USERS,
   GET_SELLER,
+  GET_SALES,
 } from '../services/URLs';
 
 export default function ContextComp({ children }) {
@@ -17,6 +18,7 @@ export default function ContextComp({ children }) {
   const [allUsers, setAllUsers] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [sellers, setSellers] = useState([]);
+  const [sales, setSales] = useState([]);
   const navigate = useNavigate();
 
   const treatMsg = (msg) => {
@@ -102,19 +104,31 @@ export default function ContextComp({ children }) {
       });
   };
 
+  const fetchSales = async (token) => {
+    await axios.get(GET_SALES, {
+      headers: { Authorization: token },
+    }).then(({ data }) => setSales(data))
+      .catch(({ message }) => {
+        const msgTreated = treatMsg(message);
+        setErrorMsg(msgTreated);
+      });
+  };
+
   const state = {
     errorMsg,
     allUsers,
+    totalPrice,
+    sellers,
+    sales,
     fetchAllUser,
     deleteUser,
     fetchUser,
     fetchCreateUser,
     fetchCreateUserAdmin,
     setTotalPrice,
-    totalPrice,
-    sellers,
     setSellers,
     fetchSellers,
+    fetchSales,
   };
 
   return (
