@@ -18,6 +18,6 @@ SaleRouter.get(
   '/',
   verifyToken,
   Sale.getSales,
-  );
-  
+);
+
 module.exports = SaleRouter;
