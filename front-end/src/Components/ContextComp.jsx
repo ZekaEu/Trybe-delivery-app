@@ -109,6 +109,7 @@ export default function ContextComp({ children }) {
     await axios.get(`${GET_ORDER}${id}`).then(({ data }) => {
       setOrder({ ...data });
     });
+  };
 
     const fetchSales = async (token) => {
       await axios.get(GET_SALES, {
@@ -150,4 +151,3 @@ export default function ContextComp({ children }) {
   ContextComp.propTypes = {
     children: PropTypes.element.isRequired,
   };
-}
