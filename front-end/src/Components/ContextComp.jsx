@@ -14,7 +14,6 @@ import {
 } from '../services/URLs';
 
 export default function ContextComp({ children }) {
-  // const [userInfos, setUserInfos] = useState([]);
   const [errorMsg, setErrorMsg] = useState(null);
   const [allUsers, setAllUsers] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -108,47 +107,47 @@ export default function ContextComp({ children }) {
 
   const fetchOrder = async (id) => {
     await axios.get(`${GET_ORDER}${id}`).then(({ data }) => {
-      console.log(data);
-      setOrder({...data});
+      setOrder({ ...data });
     });
 
-  const fetchSales = async (token) => {
-    await axios.get(GET_SALES, {
-      headers: { Authorization: token },
-    }).then(({ data }) => setSales(data))
-      .catch(({ message }) => {
-        const msgTreated = treatMsg(message);
-        setErrorMsg(msgTreated);
-      });
+    const fetchSales = async (token) => {
+      await axios.get(GET_SALES, {
+        headers: { Authorization: token },
+      }).then(({ data }) => setSales(data))
+        .catch(({ message }) => {
+          const msgTreated = treatMsg(message);
+          setErrorMsg(msgTreated);
+        });
+    };
+
+    const state = {
+      errorMsg,
+      allUsers,
+      totalPrice,
+      sellers,
+      sales,
+      fetchAllUser,
+      deleteUser,
+      fetchUser,
+      fetchCreateUser,
+      fetchCreateUserAdmin,
+      setTotalPrice,
+      setSellers,
+      fetchSellers,
+      fetchOrder,
+      order,
+      setOrder,
+      fetchSales,
+    };
+
+    return (
+      <DeliveryContext.Provider value={state}>
+        {children}
+      </DeliveryContext.Provider>
+    );
   };
 
-  const state = {
-    errorMsg,
-    allUsers,
-    totalPrice,
-    sellers,
-    sales,
-    fetchAllUser,
-    deleteUser,
-    fetchUser,
-    fetchCreateUser,
-    fetchCreateUserAdmin,
-    setTotalPrice,
-    setSellers,
-    fetchSellers,
-    fetchOrder,
-    order,
-    setOrder,
-    fetchSales,
+  ContextComp.propTypes = {
+    children: PropTypes.element.isRequired,
   };
-
-  return (
-    <DeliveryContext.Provider value={ state }>
-      { children }
-    </DeliveryContext.Provider>
-  );
-}
-
-ContextComp.propTypes = {
-  children: PropTypes.element.isRequired,
-}};
+};
