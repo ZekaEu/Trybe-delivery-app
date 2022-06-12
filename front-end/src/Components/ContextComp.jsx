@@ -10,6 +10,7 @@ import {
   DELETE_USERS,
   GET_SELLER,
   GET_ORDER,
+  GET_SALES,
 } from '../services/URLs';
 
 export default function ContextComp({ children }) {
@@ -19,6 +20,7 @@ export default function ContextComp({ children }) {
   const [totalPrice, setTotalPrice] = useState(0);
   const [sellers, setSellers] = useState([]);
   const [order, setOrder] = useState({});
+  const [sales, setSales] = useState([]);
   const navigate = useNavigate();
 
   const treatMsg = (msg) => {
@@ -109,24 +111,35 @@ export default function ContextComp({ children }) {
       console.log(data);
       setOrder({...data});
     });
+
+  const fetchSales = async (token) => {
+    await axios.get(GET_SALES, {
+      headers: { Authorization: token },
+    }).then(({ data }) => setSales(data))
+      .catch(({ message }) => {
+        const msgTreated = treatMsg(message);
+        setErrorMsg(msgTreated);
+      });
   };
 
   const state = {
     errorMsg,
     allUsers,
+    totalPrice,
+    sellers,
+    sales,
     fetchAllUser,
     deleteUser,
     fetchUser,
     fetchCreateUser,
     fetchCreateUserAdmin,
     setTotalPrice,
-    totalPrice,
-    sellers,
     setSellers,
     fetchSellers,
     fetchOrder,
     order,
     setOrder,
+    fetchSales,
   };
 
   return (
