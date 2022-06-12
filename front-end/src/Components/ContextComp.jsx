@@ -142,11 +142,11 @@ export default function ContextComp({ children }) {
   };
 
   return (
-    <DeliveryContext.Provider value={state}>
+    <DeliveryContext.Provider value={ state }>
       {children}
     </DeliveryContext.Provider>
   );
-};
+}
 
 ContextComp.propTypes = {
   children: PropTypes.element.isRequired,
