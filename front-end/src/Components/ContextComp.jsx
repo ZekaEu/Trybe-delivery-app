@@ -111,7 +111,7 @@ export default function ContextComp({ children }) {
       console.log(data);
       setOrder({...data});
     });
-    
+
   const fetchSales = async (token) => {
     await axios.get(GET_SALES, {
       headers: { Authorization: token },
