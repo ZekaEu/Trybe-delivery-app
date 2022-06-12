@@ -111,43 +111,43 @@ export default function ContextComp({ children }) {
     });
   };
 
-    const fetchSales = async (token) => {
-      await axios.get(GET_SALES, {
-        headers: { Authorization: token },
-      }).then(({ data }) => setSales(data))
-        .catch(({ message }) => {
-          const msgTreated = treatMsg(message);
-          setErrorMsg(msgTreated);
-        });
-    };
-
-    const state = {
-      errorMsg,
-      allUsers,
-      totalPrice,
-      sellers,
-      sales,
-      fetchAllUser,
-      deleteUser,
-      fetchUser,
-      fetchCreateUser,
-      fetchCreateUserAdmin,
-      setTotalPrice,
-      setSellers,
-      fetchSellers,
-      order,
-      setOrder,
-      fetchSales,
-      fetchOrder,
-    };
-
-    return (
-      <DeliveryContext.Provider value={ state }>
-        {children}
-      </DeliveryContext.Provider>
-    );
+  const fetchSales = async (token) => {
+    await axios.get(GET_SALES, {
+      headers: { Authorization: token },
+    }).then(({ data }) => setSales(data))
+      .catch(({ message }) => {
+        const msgTreated = treatMsg(message);
+        setErrorMsg(msgTreated);
+      });
   };
 
-  ContextComp.propTypes = {
-    children: PropTypes.element.isRequired,
+  const state = {
+    errorMsg,
+    allUsers,
+    totalPrice,
+    sellers,
+    sales,
+    fetchAllUser,
+    deleteUser,
+    fetchUser,
+    fetchCreateUser,
+    fetchCreateUserAdmin,
+    setTotalPrice,
+    setSellers,
+    fetchSellers,
+    order,
+    setOrder,
+    fetchSales,
+    fetchOrder,
   };
+
+  return (
+    <DeliveryContext.Provider value={state}>
+      {children}
+    </DeliveryContext.Provider>
+  );
+};
+
+ContextComp.propTypes = {
+  children: PropTypes.element.isRequired,
+};
