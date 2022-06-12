@@ -134,14 +134,14 @@ export default function ContextComp({ children }) {
       setTotalPrice,
       setSellers,
       fetchSellers,
-      fetchOrder,
       order,
       setOrder,
       fetchSales,
+      fetchOrder,
     };
 
     return (
-      <DeliveryContext.Provider value={state}>
+      <DeliveryContext.Provider value={ state }>
         {children}
       </DeliveryContext.Provider>
     );
@@ -150,4 +150,4 @@ export default function ContextComp({ children }) {
   ContextComp.propTypes = {
     children: PropTypes.element.isRequired,
   };
-};
+}
