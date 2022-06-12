@@ -1,20 +1,15 @@
-import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
-import React, { useContext, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
 import ProductsNavigation from '../Components/ProductsNavigation';
 import DeliveryContext from '../Context/DeliveryContext';
-import { orderTableItem, orderTableName,
-  orderTableQt, orderTableRemove,
-  orderTableTotal, orderTableUnitPrice } from '../services/dataTestids';
-import { POST_SALE } from '../services/URLs';
 
 export default function OrderDetails() {
-  const { fetchOrder, setOrder, order } = useContext(DeliveryContext);
+  const { fetchOrder, order } = useContext(DeliveryContext);
 
   const { id } = useParams();
   useEffect(() => {
     fetchOrder(id).then(() => console.log(order));
-  }, []);
+  });
   // const navigate = useNavigate();
   // const [removeItem, setRemoveItem] = useState('');
   // const [sellerId, setSellerId] = useState(2);
@@ -67,7 +62,6 @@ export default function OrderDetails() {
     <div>
       { console.log(order) }
       <ProductsNavigation />
-      <p>foi</p>
       <table className="table table-striped mt-4 align-middle">
         <thead>
           <tr>
