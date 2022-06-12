@@ -23,15 +23,25 @@ export default function ProductsNavigation() {
       <nav className="products-nav">
         <span
           className="nav-span"
-          data-testid="customer_products__element-navbar-link-products"
         >
-          PRODUTOS
+          <button
+            type="button"
+            data-testid="customer_products__element-navbar-link-products"
+            onClick={ () => navigate('/customer/products') }
+          >
+            PRODUTOS
+          </button>
         </span>
         <span
           className="nav-span"
-          data-testid="customer_products__element-navbar-link-orders"
         >
-          MEUS PEDIDOS
+          <button
+            type="button"
+            data-testid="customer_products__element-navbar-link-orders"
+            onClick={ () => navigate('/customer/orders') }
+          >
+            MEUS PEDIDOS
+          </button>
         </span>
         <span
           className="nav-span"

@@ -1,0 +1,51 @@
+.sales-container {
+  border-radius: 15px;
+  box-shadow: 0 2px 4px #0006 , 0 7px 13px -3px #0000004d , 0 -3px 0 inset #0003;
+  display: flex;
+  flex-wrap: wrap;
+  height: 80vh;
+  margin: 2% auto;
+  padding: 1%;
+  width: 90vw;
+}
+
+.sale-card {
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.15) 0 2px 8px;
+  display: flex;
+  height: 100px;
+  justify-content: space-around;
+  margin: 5px;
+  padding: 0;
+  width: 350px;
+}
+
+.order {
+  align-items: center;/* border: 1px solid black; */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+}
+
+.status {/* border: 1px solid black; */
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+}
+
+.date {
+  display: flex;
+  flex-direction: column;
+}
+
+.date-and-price {/* border: 1px solid black; */
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
