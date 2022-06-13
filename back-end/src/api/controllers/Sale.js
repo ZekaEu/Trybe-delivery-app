@@ -27,4 +27,15 @@ const getSales = async (_req, res, next) => {
   }
 };
 
-module.exports = { createSale, getSales };
+const getSingleSale = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const sale = await Sale.findOne({ id });
+    if (!sale) return res.status(404).json({ message: 'Not found!' });
+    return res.status(200).json(sale);
+  } catch (err) {
+    return next(err);
+  }
+};
+
+module.exports = { createSale, getSales, getSingleSale };

@@ -49,4 +49,15 @@ const findAllSellers = async (_req, res, next) => {
   }
 };
 
-module.exports = { findAll, findUser, createUser, deleteUser, findAllSellers };
+const findUserById = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findOne({ id });
+    if (!user) return res.status(404).json({ message: 'Not found!' });
+    res.status(200).json(user);
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { findAll, findUser, createUser, deleteUser, findAllSellers, findUserById };

@@ -9,16 +9,21 @@ import {
   GET_USERS,
   DELETE_USERS,
   GET_SELLER,
+  GET_ORDER,
   GET_SALES,
+  GET_SALE,
+  GET_USER,
 } from '../services/URLs';
 
 export default function ContextComp({ children }) {
-  // const [userInfos, setUserInfos] = useState([]);
   const [errorMsg, setErrorMsg] = useState(null);
   const [allUsers, setAllUsers] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [sellers, setSellers] = useState([]);
+  const [order, setOrder] = useState({});
   const [sales, setSales] = useState([]);
+  const [sale, setSale] = useState({});
+  const [seller, setSeller] = useState({});
   const navigate = useNavigate();
 
   const treatMsg = (msg) => {
@@ -104,6 +109,24 @@ export default function ContextComp({ children }) {
       });
   };
 
+  const fetchOrder = async (id) => {
+    await axios.get(`${GET_ORDER}${id}`).then(({ data }) => {
+      setOrder({ ...data });
+    });
+  };
+
+  const fetchSale = async (id) => {
+    await axios.get(`${GET_SALE}${id}`).then(({ data }) => {
+      setSale({ ...data });
+    });
+  };
+
+  const fetchSeller = async (id) => {
+    await axios.get(`${GET_USER}${id}`).then(({ data }) => {
+      setSeller({ ...data });
+    });
+  };
+
   const fetchSales = async (token) => {
     await axios.get(GET_SALES, {
       headers: { Authorization: token },
@@ -128,12 +151,19 @@ export default function ContextComp({ children }) {
     setTotalPrice,
     setSellers,
     fetchSellers,
+    order,
+    setOrder,
     fetchSales,
+    fetchOrder,
+    fetchSale,
+    fetchSeller,
+    sale,
+    seller,
   };
 
   return (
     <DeliveryContext.Provider value={ state }>
-      { children }
+      {children}
     </DeliveryContext.Provider>
   );
 }

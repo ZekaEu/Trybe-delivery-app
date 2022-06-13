@@ -17,6 +17,11 @@ UserRouter.get(
   User.findAllSellers,
 );
 
+UserRouter.get(
+  '/sellers/:id',
+  User.findUserById,
+);
+
 UserRouter.post('/',
   emailValid,
   passwordValid,
