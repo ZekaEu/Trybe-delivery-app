@@ -11,6 +11,8 @@ import {
   GET_SELLER,
   GET_ORDER,
   GET_SALES,
+  GET_SALE,
+  GET_USER,
 } from '../services/URLs';
 
 export default function ContextComp({ children }) {
@@ -20,6 +22,8 @@ export default function ContextComp({ children }) {
   const [sellers, setSellers] = useState([]);
   const [order, setOrder] = useState({});
   const [sales, setSales] = useState([]);
+  const [sale, setSale] = useState({});
+  const [seller, setSeller] = useState({});
   const navigate = useNavigate();
 
   const treatMsg = (msg) => {
@@ -111,6 +115,18 @@ export default function ContextComp({ children }) {
     });
   };
 
+  const fetchSale = async (id) => {
+    await axios.get(`${GET_SALE}${id}`).then(({ data }) => {
+      setSale({ ...data });
+    });
+  };
+
+  const fetchSeller = async (id) => {
+    await axios.get(`${GET_USER}${id}`).then(({ data }) => {
+      setSeller({ ...data });
+    });
+  };
+
   const fetchSales = async (token) => {
     await axios.get(GET_SALES, {
       headers: { Authorization: token },
@@ -139,6 +155,10 @@ export default function ContextComp({ children }) {
     setOrder,
     fetchSales,
     fetchOrder,
+    fetchSale,
+    fetchSeller,
+    sale,
+    seller,
   };
 
   return (

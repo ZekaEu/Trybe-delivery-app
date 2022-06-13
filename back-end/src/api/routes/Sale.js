@@ -20,4 +20,6 @@ SaleRouter.get(
   Sale.getSales,
 );
 
+SaleRouter.get('/sale/:id', Sale.getSingleSale);
+
 module.exports = SaleRouter;

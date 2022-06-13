@@ -2,6 +2,15 @@ import { useParams } from 'react-router-dom';
 import React, { useContext, useEffect } from 'react';
 import ProductsNavigation from '../Components/ProductsNavigation';
 import DeliveryContext from '../Context/DeliveryContext';
+import OrderDetailsHeader from '../Components/OrderDetailsHeader';
+import {
+  itemName,
+  itemNumber,
+  itemQuantity,
+  subTotal,
+  unitPrice,
+  detailTotalPrice,
+} from '../services/dataTestids';
 
 export default function OrderDetails() {
   const { fetchOrder, order } = useContext(DeliveryContext);
@@ -9,59 +18,16 @@ export default function OrderDetails() {
   const { id } = useParams();
   useEffect(() => {
     fetchOrder(id).then(() => console.log(order));
-  });
-  // const navigate = useNavigate();
-  // const [removeItem, setRemoveItem] = useState('');
-  // const [sellerId, setSellerId] = useState(2);
-  // const [deliveryAddress, setDeliveryAddress] = useState('');
-  // const [deliveryNumber, setDeliveryNumber] = useState('');
-  // const { totalPrice,
-  //   setTotalPrice, fetchSellers, sellers } = useContext(DeliveryContext);
-
-  // const cart = JSON.parse(localStorage.getItem('cart'));
-  // const user = JSON.parse(localStorage.getItem('user'));
-  // useEffect(() => {
-  //   fetchSellers();
-  //   if (cart) {
-  //     const total = cart.reduce(
-  //       (acc, item) => acc + Number(item.price * item.quantity),
-  //       0,
-  //     );
-  //     setTotalPrice(total.toFixed(2));
-  //   }
-  //   const newCart = cart.filter((product) => product.id !== removeItem);
-  //   localStorage.setItem('cart', JSON.stringify(newCart));
-  //   setRemoveItem('');
-  // }, [removeItem]);
-
-  // const completePurchase = async () => {
-  //   const arrProducts = cart
-  //     .map((sku) => ({ productId: sku.id, quantity: sku.quantity }));
-  //   const requestParam = {
-  //     userId: user.id,
-  //     sellerId,
-  //     totalPrice,
-  //     deliveryAddress,
-  //     deliveryNumber,
-  //     status: 'Pendente',
-  //     arrProducts,
-  //   };
-
-  //   const { data } = await axios({
-  //     method: 'post',
-  //     url: POST_SALE,
-  //     data: requestParam,
-  //     headers: { Authorization: user.token },
-  //   });
-  //   localStorage.removeItem('cart');
-  //   navigate(`/customer/orders/${data.id}`);
-  //   setTotalPrice(0);
-  // };
+  }, [order.id]);
 
   return (
     <div>
-      { console.log(order) }
+      {/* { console.log(order) } */}
       <ProductsNavigation />
+      <h5>Detalhes do pedido</h5>
+      { Object.keys(order).length !== 0 && (
+        <OrderDetailsHeader />
+      )}
       <table className="table table-striped mt-4 align-middle">
         <thead>
           <tr>
@@ -78,27 +44,27 @@ export default function OrderDetails() {
               <tr key={ `${name}` }>
                 <th
                   scope="row"
-                  data-testid={ `${index}` }
+                  data-testid={ `${itemNumber}${index}` }
                 >
                   { index + 1 }
                 </th>
                 <td
-                  data-testid={ `${index}` }
+                  data-testid={ `${itemName}${index}` }
                 >
                   { name }
                 </td>
                 <td
-                  data-testid={ `${index}` }
+                  data-testid={ `${itemQuantity}${index}` }
                 >
                   { quantity }
                 </td>
                 <td
-                  data-testid={ `${index}` }
+                  data-testid={ `${unitPrice}${index}` }
                 >
                   { (price).replace('.', ',') }
                 </td>
                 <td
-                  data-testid={ `${index}` }
+                  data-testid={ `${subTotal}${index}` }
                 >
                   { (Number(price) * Number(quantity))
                     .toFixed(2).replace('.', ',') }
@@ -110,10 +76,10 @@ export default function OrderDetails() {
       </table>
       <div
         className="checkout_total_price d-flex justify-content-center"
-        data-testid="customer_checkout__element-order-total-price"
+        data-testid={ detailTotalPrice }
       >
         Total: R$
-        <span data-testid="customer_products__checkout-bottom-value">
+        <span data-testid={ detailTotalPrice }>
           { Object.keys(order).length && order.totalPrice.replace('.', ',') }
         </span>
       </div>
