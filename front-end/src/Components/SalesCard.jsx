@@ -6,8 +6,8 @@ export default function SalesCard() {
   const { fetchSales, sales } = useContext(DeliveryContext);
 
   const getInfos = async () => {
-    const { token } = JSON.parse(localStorage.getItem('user'));
-    await fetchSales(token);
+    const { token, id } = JSON.parse(localStorage.getItem('user'));
+    await fetchSales(token, id);
   };
 
   useEffect(() => {

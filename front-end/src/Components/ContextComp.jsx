@@ -127,10 +127,13 @@ export default function ContextComp({ children }) {
     });
   };
 
-  const fetchSales = async (token) => {
+  const fetchSales = async (token, id) => {
     await axios.get(GET_SALES, {
       headers: { Authorization: token },
-    }).then(({ data }) => setSales(data))
+    }).then(({ data }) => {
+      console.log(data);
+      setSales(data.filter((el) => el.userId === id));
+    })
       .catch(({ message }) => {
         const msgTreated = treatMsg(message);
         setErrorMsg(msgTreated);
