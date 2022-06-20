@@ -1,0 +1,26 @@
+.seller-nav {
+  align-items: center;
+  background-color: black;
+  border: 1px solid black;
+  color: white;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 1%;
+}
+
+.address {
+  font-size: 16px;
+  position: relative;
+  width: 290px;
+}
+
+.seller-card {
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.15) 0 2px 8px;
+  display: flex;
+  height: 100px;
+  justify-content: space-around;
+  margin: 5px;
+  padding: 0;
+  width: 500px;
+}
