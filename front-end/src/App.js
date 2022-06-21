@@ -12,6 +12,7 @@ import Admin from './Pages/Admin';
 import OrderDetails from './Pages/OrderDetails';
 import OrdersPage from './Pages/OrdersPage';
 import SellersPage from './Pages/SellersPage';
+import SaleDetails from './Pages/SaleDetails';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Route exact path="/customer/checkout" element={ <CustomerCheckout /> } />
       <Route exact path="/customer/products" element={ <CustomerProducts /> } />
       <Route exact path="/customer/orders/:id" element={ <OrderDetails /> } />
+      <Route exact path="/seller/orders/:id" element={ <SaleDetails /> } />
       <Route exact path="/customer/orders" element={ <OrdersPage /> } />
       <Route exact path="/seller/orders" element={ <SellersPage /> } />
       <Route exact path="/admin/manage" element={ <Admin /> } />
