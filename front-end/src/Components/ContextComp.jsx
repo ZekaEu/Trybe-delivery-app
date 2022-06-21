@@ -67,6 +67,7 @@ export default function ContextComp({ children }) {
     }).then(({ data }) => {
       // setUserInfos(data);
       localStorage.setItem('user', JSON.stringify(data));
+      if (data.role === 'seller') return navigate('/seller/orders');
       if (data.role !== 'administrator') return navigate('/customer/products');
       return navigate('/admin/manage');
     }).catch(({ message }) => {
@@ -127,10 +128,25 @@ export default function ContextComp({ children }) {
     });
   };
 
-  const fetchSales = async (token) => {
+  const fetchSales = async (token, id) => {
     await axios.get(GET_SALES, {
       headers: { Authorization: token },
-    }).then(({ data }) => setSales(data))
+    }).then(({ data }) => {
+      console.log(data);
+      setSales(data.filter((el) => el.userId === id));
+    })
+      .catch(({ message }) => {
+        const msgTreated = treatMsg(message);
+        setErrorMsg(msgTreated);
+      });
+  };
+
+  const fetchSellerSales = async (token, id) => {
+    await axios.get(GET_SALES, {
+      headers: { Authorization: token },
+    }).then(({ data }) => {
+      setSales(data.filter((el) => el.sellerId === id));
+    })
       .catch(({ message }) => {
         const msgTreated = treatMsg(message);
         setErrorMsg(msgTreated);
@@ -143,6 +159,9 @@ export default function ContextComp({ children }) {
     totalPrice,
     sellers,
     sales,
+    order,
+    sale,
+    seller,
     fetchAllUser,
     deleteUser,
     fetchUser,
@@ -151,14 +170,12 @@ export default function ContextComp({ children }) {
     setTotalPrice,
     setSellers,
     fetchSellers,
-    order,
+    fetchSellerSales,
     setOrder,
     fetchSales,
     fetchOrder,
     fetchSale,
     fetchSeller,
-    sale,
-    seller,
   };
 
   return (
